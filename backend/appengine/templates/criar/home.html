@@ -1,0 +1,18 @@
+{% extends 'criar/base.html' %}
+
+{% block conteudo %}
+    <div class="col-md-12 column">
+        <div class="conteudo">
+            <div class="well">
+                <h1>Criando jogos</h1>
+                <form action="{{ criar_modelo }}" method="post" role="form">
+                    {{ csrf_input() }}
+                    {{ form_input( 'Título', 'tit', '', '') }}
+                    {{ form_input( 'Mapas', 'map', '', '') }}
+                    {{ form_input( 'Grupo', 'gru', '', '') }}
+                    <button type="submit" class="btn btn-success">Criar</button>
+                </form>
+            </div>
+		</div>
+    </div>
+{% endblock %}

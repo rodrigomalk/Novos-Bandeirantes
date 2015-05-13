@@ -1,0 +1,54 @@
+{% extends '/base/base.html' %}
+{% block tab %}
+    {{ select_tab('INICIAL') }}
+{% endblock %}
+{% block conteudo %}
+    <div class="col-md-4 column">
+        <div class="conteudo">
+            <div class="jumbotron">
+				<h1 style="font-size: 45px">
+					Aprendendo
+				</h1>
+                <br /><p></p>
+                <p>
+					Aprenda História e Geografia de uma maneira interativa e divertida, jogando jogos pelo nosso sistema exclusivo ou assintindo tutoriais...
+                </p>
+				<p>
+					<a class="btn btn-primary btn-large" href="/tutos/aprendendo">Leia Mais</a>
+				</p>
+			</div>
+        </div>
+    </div>
+    <div class="col-md-4 column">
+        <div class="conteudo">
+            <div class="jumbotron">
+				<h1>
+					Jogando
+				</h1>
+                <p></p>
+                <p>
+					Você pode jogar jogos livres, ou jogos direcionados a você ou a algum grupo que faça parte. O primeiro objetivo no jogo é acertar as perguntas...
+                </p>
+				<p>
+					<a class="btn btn-primary btn-large" href="tutos/jogando">Leia Mais</a>
+				</p>
+			</div>
+        </div>
+    </div>
+    <div class="col-md-4 column">
+        <div class="conteudo">
+            <div class="jumbotron">
+				<h1>
+					Criando
+				</h1>
+                <p></p>
+                <p>
+					Ao criar um jogo, em um sistema simples e intuitivo, você escolhe como será o mapa, seleciona as perguntas e os locais clicáveis....
+                </p>
+				<p>
+					<a class="btn btn-primary btn-large" href="/tutos/criando">Leia Mais</a>
+				</p>
+			</div>
+        </div>
+    </div>
+{% endblock %}

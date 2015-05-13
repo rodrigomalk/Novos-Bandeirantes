@@ -1,0 +1,78 @@
+body{
+    background-image: url("../../static/img/mapa_fundo.jpg");
+    color: #FFFFFF;
+}
+
+.clearfix {
+    margin-top: 20px;
+    padding: 10px;
+}
+
+h4{
+    color: #000000;
+    text-shadow: #FFFFFF 2px 2px 2px, #FFFFFF -2px -2px 2px;
+}
+
+b {
+    color: #000000;
+    text-shadow: #FFFFFF 2px 2px 2px, #FFFFFF -2px -2px 2px;
+}
+
+a, a:hover, a:visited{
+    color: #FFFFFF;
+}
+
+.navbar{
+    background-color: RGBA(00,00,00,0.9);
+    color: #FFFFFF;
+    box-shadow: 1px 1px 4px #CCCCCC;
+    border-radius: 10px 40px;
+}
+
+.navbar-default .navbar-nav>li>a:hover{
+    color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+    background-color: #FFFFFF;
+    color: #00aaff;
+    font-size: large;
+    box-shadow: 2px 2px 4px #00aaff, -2px -2px 4px #00aaff;
+    border-radius: 10px;
+}
+
+.footer{
+    background-color: RGBA(00,00,00,0.9);
+    color: #FFFFFF;
+    box-shadow: 1px 1px 4px #CCCCCC;
+    border-radius: 10px 40px;
+    text-align: center;
+    font-size: small;
+    margin-bottom: -10px;
+}
+
+.conteudo{
+    min-height: 500px;
+    margin-top: -30px;
+    margin-bottom: -20px;
+    border-radius: 10px 40px;
+    background-color: #FFFFFF;
+    color: #000000;
+    padding: 10px;
+}
+
+.left{
+    float: left;
+    width: 500px;
+}
+
+.right{
+    float: left;
+    margin-left: 10px;
+}
+
+.container .jumbotron {
+    border-radius: 6px 30px;
+    height: 100px;
+    padding-top: 2px;
+}
