@@ -7,7 +7,7 @@ from gaepermission.decorator import login_not_required
 @login_not_required
 @no_csrf
 def jogando():
-    return TemplateResponse(template_path="/jogando.html")
+    return TemplateResponse(template_path="/tutos/jogando.html")
 
 @login_not_required
 @no_csrf
@@ -17,4 +17,4 @@ def criando():
 @login_not_required
 @no_csrf
 def aprendendo():
-    return TemplateResponse(template_path="/aprendendo.html")
+    return TemplateResponse(template_path="/tutos/aprendendo.html")
