@@ -4,13 +4,12 @@
     <div class="col-md-12 column">
         <div class="conteudo">
             <div class="well">
-                <h1>Criando jogos</h1>
+                <h1>Perguntas</h1>
                 <form action="{{ criar_jogo }}" method="post" role="form">
                     {{ csrf_input() }}
-                    {{ form_input( 'Título', 'tit', '', '') }}
-                    {{ for_input ( 'Pergunta', 'per', '', '') }}
-                    {{ for_input ( 'Resposta', 'res', '', '') }}
-                    <button type="submit" class="btn btn-success">Criar</button>
+                    {{ form_input( 'Pergunta', 'perg', '', '') }}
+                    {{ for_input ( 'Resposta', 'resp', '', '') }}
+                    <button type="submit" class="btn btn-success">Cadastrar</button>
                 </form>
             </div>
 		</div>

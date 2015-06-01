@@ -7,6 +7,8 @@ from tekton import router
 from gaegraph.model import Node
 from google.appengine.ext import ndb
 from gaeforms.ndb.form import ModelForm
+from tekton.gae.middleware.redirect import RedirectResponse
+
 
 @login_not_required
 @no_csrf
@@ -26,9 +28,11 @@ def salvar(**propriedades):
     game_form = GameForm(**propriedades)
     erros = game_form.validate()
     if erros:
-            contexto={'criar_modelo': router.to_path(salvar)}
+            contexto={'criar_modelo': router.to_path(salvar),
+                      'game': game_form,
+                      'erros': erros}
             return TemplateResponse(contexto, 'criar/home.html')
     else:
-        pass
-    jogo=Game(tit=propriedades['tit'], map=propriedades['map'], grup=propriedades['gru'])
-    jogo.put()
+        jogo=game_form.fill_model()
+        jogo.put()
+        return RedirectResponse(router.to_path("/criar/criando.html"))

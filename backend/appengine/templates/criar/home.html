@@ -7,9 +7,9 @@
                 <h1>Criando jogos</h1>
                 <form action="{{ criar_modelo }}" method="post" role="form">
                     {{ csrf_input() }}
-                    {{ form_input( 'Título', 'tit', '', '') }}
-                    {{ form_input( 'Mapas', 'map', '', '') }}
-                    {{ form_input( 'Grupo', 'gru', '', '') }}
+                    {{ form_input( 'Título', 'tit', game.tit, erros.tit) }}
+                    {{ form_input( 'Mapas', 'map', game.map, erros.map) }}
+                    {{ form_input( 'Grupo', 'grup', game.grup, erros.grup) }}
                     <button type="submit" class="btn btn-success">Criar</button>
                 </form>
             </div>
