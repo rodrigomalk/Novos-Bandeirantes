@@ -7,8 +7,8 @@
                 <h1>Perguntas</h1>
                 <form action="{{ criar_jogo }}" method="post" role="form">
                     {{ csrf_input() }}
-                    {{ form_input( 'Pergunta', 'perg', '', '') }}
-                    {{ form_input ( 'Resposta', 'resp', '', '') }}
+                    {{ form_input( 'Pergunta', 'perg', quest.perg, erro.perg) }}
+                    {{ form_input ( 'Resposta', 'resp', quest.resp, erro.resp) }}
                     <button type="submit" class="btn btn-success">Cadastrar</button>
                 </form>
             </div>

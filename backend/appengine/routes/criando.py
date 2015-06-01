@@ -16,13 +16,9 @@ def index():
     contexto={'criar_modelo': router.to_path(salvar)}
     return TemplateResponse(contexto)
 
-nome = ''
-
 class Game(Node):
     tit=ndb.StringProperty(required=True)
     map=ndb.StringProperty(required=True)
-    qtd=ndb.IntegerProperty(default=1)
-    tmp=ndb.IntegerProperty()
     grup=ndb.StringProperty()
 
 class GameForm(ModelForm):
@@ -39,33 +35,10 @@ def salvar(**propriedades):
     else:
         jogo=game_form.fill_model()
         jogo.put()
-        global nome
-        nome = Game.tit
         return RedirectResponse(router.to_path(continuar))
 
 @login_not_required
 @no_csrf
 def continuar():
-    ctx={'criar_jogo': router.to_path(inserir)}
-    return TemplateResponse(ctx, "/criar/criando.html")
-
-class Quest(Node):
-    perg=ndb.StringProperty(required=True)
-    resp=ndb.StringProperty(required=True)
-    jog=ndb.StringProperty(nome)
-
-class QuestForm(ModelForm):
-    _model_class = Quest
-
-def inserir(**propriedades):
-    quest_form = QuestForm(**propriedades)
-    erro = quest_form.validate()
-    if erro:
-            contexto={'criar_modelo': router.to_path(salvar),
-                      'quest': quest_form,
-                      'erro': erro}
-            return TemplateResponse(contexto, 'criar/criandoform.html')
-    else:
-        questao=quest_form.fill_model()
-        questao.put()
-        return RedirectResponse(router.to_path(continuar))
+    ctx={'criar_modelo': router.to_path(salvar)}
+    return TemplateResponse(ctx, "../criando")

@@ -1,0 +1,29 @@
+{% extends '/editar/base.html' %}
+
+{% block conteudo %}
+    <div class="col-md-12 column">
+        <div class="conteudo">
+            <div class="well">
+                <h1>Selecione o jogo</h1>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Titulo</th>
+                        <th>Mapa</th>
+                        <th>Grupo
+
+                    </tr>
+                    </thead>
+                    {% for jogo in jogo_lista %}
+                    <tr>
+                        <td>{{ jogo.tit }}</td>
+                        <td>{{ jogo.map }}</td>
+                        <td>{{ jogo.grup }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+		</div>
+    </div>
+{% endblock %}
