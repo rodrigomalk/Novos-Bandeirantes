@@ -9,16 +9,13 @@ from google.appengine.ext import ndb
 from gaeforms.ndb.form import ModelForm
 from tekton.gae.middleware.redirect import RedirectResponse
 
-
 @login_not_required
 @no_csrf
 def index():
     contexto={'criar_modelo': router.to_path(salvar)}
     return TemplateResponse(contexto)
 
-nome = ''
-
-class Game(Node):
+class Game(ndb.Model):
     tit=ndb.StringProperty(required=True)
     map=ndb.StringProperty(required=True)
     qtd=ndb.IntegerProperty(default=1)
@@ -39,8 +36,6 @@ def salvar(**propriedades):
     else:
         jogo=game_form.fill_model()
         jogo.put()
-        global nome
-        nome = Game.tit
         return RedirectResponse(router.to_path(continuar))
 
 @login_not_required
@@ -49,10 +44,10 @@ def continuar():
     ctx={'criar_jogo': router.to_path(inserir)}
     return TemplateResponse(ctx, "/criar/criando.html")
 
-class Quest(Node):
+class Quest(ndb.Model):
     perg=ndb.StringProperty(required=True)
     resp=ndb.StringProperty(required=True)
-    jog=ndb.StringProperty(nome)
+    jog=ndb.KeyProperty(Game)
 
 class QuestForm(ModelForm):
     _model_class = Quest
@@ -66,6 +61,8 @@ def inserir(**propriedades):
                       'erro': erro}
             return TemplateResponse(contexto, 'criar/criandoform.html')
     else:
+        jogo = Game.query().get()
         questao=quest_form.fill_model()
+        questao.jog = jogo.key
         questao.put()
         return RedirectResponse(router.to_path(continuar))
