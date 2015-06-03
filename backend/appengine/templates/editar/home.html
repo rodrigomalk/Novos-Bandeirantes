@@ -5,13 +5,14 @@
         <div class="conteudo">
             <div class="well">
                 <h1>Selecione o jogo</h1>
-                <table>
+                <table class="table">
                     <thead>
                     <tr>
-                        <th>id</th>
                         <th>Titulo</th>
                         <th>Mapa</th>
-                        <th>Grupo
+                        <th>Chances</th>
+                        <th>Tempo</th>
+                        <th>Grupo</th>
 
                     </tr>
                     </thead>
@@ -19,7 +20,9 @@
                     <tr>
                         <td>{{ jogo.tit }}</td>
                         <td>{{ jogo.map }}</td>
-                        <td>{{ jogo.grup }}</td>
+                        <td>{{ 'Unica Tentativa' if jogo.qtd == 1 else jogo.qtd}}</td>
+                        <td>{{ 'Sem Limite' if jogo.tmp == None else '%d %s' %(jogo.tmp, 'horas') }}</td>
+                        <td>{{ 'Jogo Aberto' if jogo.grup == '' else jogo.grup}}</td>
                     </tr>
                     {% endfor %}
                 </table>

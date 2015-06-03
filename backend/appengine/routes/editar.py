@@ -7,5 +7,5 @@ from routes.criar import Game
 @no_csrf
 def index():
     query=Game.query()
-    contexto = {'jogo_lista':query.fetch}
+    contexto = {'jogo_lista':query.fetch()}
     return TemplateResponse(contexto)

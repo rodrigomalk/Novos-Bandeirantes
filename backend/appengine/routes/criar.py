@@ -4,7 +4,6 @@ from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
 from gaepermission.decorator import login_not_required
 from tekton import router
-from gaegraph.model import Node
 from google.appengine.ext import ndb
 from gaeforms.ndb.form import ModelForm
 from tekton.gae.middleware.redirect import RedirectResponse
@@ -22,11 +21,15 @@ class Game(ndb.Model):
     tmp=ndb.IntegerProperty()
     grup=ndb.StringProperty()
 
+titulo = ''
+
 class GameForm(ModelForm):
     _model_class = Game
 
 def salvar(**propriedades):
+    global titulo
     game_form = GameForm(**propriedades)
+    titulo = propriedades['tit']
     erros = game_form.validate()
     if erros:
             contexto={'criar_modelo': router.to_path(salvar),
@@ -47,13 +50,17 @@ def continuar():
 class Quest(ndb.Model):
     perg=ndb.StringProperty(required=True)
     resp=ndb.StringProperty(required=True)
-    jog=ndb.KeyProperty(Game)
+    jog=ndb.KeyProperty()
 
 class QuestForm(ModelForm):
     _model_class = Quest
 
 def inserir(**propriedades):
     quest_form = QuestForm(**propriedades)
+    #jogo = Game.query(Game.tit == titulo)
+    #jogos = jogo.fetch()
+    #for j in jogos:
+    #    quest_form.jog = j.key.id
     erro = quest_form.validate()
     if erro:
             contexto={'criar_modelo': router.to_path(salvar),
@@ -61,8 +68,6 @@ def inserir(**propriedades):
                       'erro': erro}
             return TemplateResponse(contexto, 'criar/criandoform.html')
     else:
-        jogo = Game.query().get()
         questao=quest_form.fill_model()
-        questao.jog = jogo.key
         questao.put()
         return RedirectResponse(router.to_path(continuar))
