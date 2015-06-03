@@ -1,4 +1,4 @@
-{% extends '/editar/base.html' %}
+{% extends '/temporario/editar/base.html' %}
 
 {% block conteudo %}
     <div class="col-md-12 column">
@@ -8,22 +8,22 @@
                 <table class="table">
                     <thead>
                     <tr>
+                        <th></th>
                         <th>Titulo</th>
                         <th>Mapa</th>
                         <th>Chances</th>
                         <th>Tempo</th>
                         <th>Grupo</th>
-                        <th></th>
                     </tr>
                     </thead>
                     {% for jogo in jogo_lista %}
                     <tr>
+                        <td><a href="{{ jogo.edit_path }}"><span class="glyphicon glyphicon-pencil" style="color: #080808"></span> </a></td>
                         <td>{{ jogo.tit }}</td>
                         <td>{{ jogo.map }}</td>
-                        <td>{{ 'Unica Tentativa' if jogo.qtd == 1 else jogo.qtd}}</td>
-                        <td>{{ 'Sem Limite' if jogo.tmp == None else '%d %s' %(jogo.tmp, 'horas') }}</td>
+                        <td>{{ 'Unica Tentativa' if jogo.qtd == '1' else jogo.qtd}}</td>
+                        <td>{{ 'Sem Limite' if jogo.tmp == '' else '%s %s' %(jogo.tmp, 'horas') }}</td>
                         <td>{{ 'Jogo Aberto' if jogo.grup == '' else jogo.grup}}</td>
-                        <td><a href="{{ jogo.edit_path }}"><i class="glyphicon glyphicon-pencil"></i></a></td>
                     </tr>
                     {% endfor %}
                 </table>

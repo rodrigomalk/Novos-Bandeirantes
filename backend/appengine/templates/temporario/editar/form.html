@@ -1,0 +1,20 @@
+{% extends '/temporario/editar/base.html' %}
+
+{% block conteudo %}
+    <div class="col-md-12 column">
+        <div class="conteudo">
+            <div class="well">
+                <h1>Editando jogos</h1>
+                <form action="{{ editar_path }}" method="post" role="form">
+                    {{ csrf_input() }}
+                    {{ form_input( 'Título', 'tit', game.tit, erros.tit) }}
+                    {{ form_input( 'Mapas', 'map', game.map, erros.map) }}
+                    {{ form_input( 'Chances (Padrão 1)', 'qtd', game.qtd, erros.qtd) }}
+                    {{ form_input( 'Tempo Limite (Padrão Sem Limite)', 'tmp', game.tmp, erros.tmp) }}
+                    {{ form_input( 'Grupo', 'grup', game.grup, erros.grup) }}
+                    <button type="submit" class="btn btn-success">Alterar</button>
+                </form>
+            </div>
+		</div>
+    </div>
+{% endblock %}
