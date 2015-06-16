@@ -2,29 +2,39 @@
 from __future__ import absolute_import, unicode_literals
 from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
-from gaepermission.decorator import login_not_required
 from tekton import router
 from google.appengine.ext import ndb
 from gaeforms.ndb.form import ModelForm
+from gaegraph.model import Arc
 from tekton.gae.middleware.redirect import RedirectResponse
 
 @no_csrf
-def editar():
-    query=Game.query()
-    jogo_lista = query.fetch()
+def editar(_logged_user):
+    user_key = _logged_user.key
+    query = Autor.query(Autor.origin == user_key)
+    autores = query.fetch()
+    game_keys = [autor.destination for autor in autores]
+    jogo_lista = ndb.get_multi(game_keys)
     form = GameFormTable()
     jogo_lista = [form.fill_with_model(jogo) for jogo in jogo_lista]
     editar_form_path=router.to_path(editar_form)
+    deletar_form_path=router.to_path(deletar_form)
     for jogo in jogo_lista:
         jogo['edit_path']='%s/%s'%(editar_form_path, jogo['id'])
+        jogo['delete_path']='%s/%s'%(deletar_form_path, jogo['id'])
     contexto = {'jogo_lista': jogo_lista}
     return TemplateResponse(contexto)
 
-@login_not_required
 @no_csrf
 def criar():
     contexto={'criar_modelo': router.to_path(salvar)}
     return TemplateResponse(contexto)
+
+@no_csrf
+def deletar_form(jogo_id):
+    chave = ndb.Key(Game, int(jogo_id))
+    chave.delete()
+    return RedirectResponse(router.to_path(editar))
 
 @no_csrf
 def editar_form(jogo_id):
@@ -51,20 +61,7 @@ def atualizar(jogo_id, **propriedades):
         jogo.put()
         return RedirectResponse(router.to_path(editar))
 
-class Game(ndb.Model):
-    tit=ndb.StringProperty(required=True)
-    map=ndb.StringProperty(required=True)
-    qtd=ndb.IntegerProperty(default=1)
-    tmp=ndb.IntegerProperty()
-    grup=ndb.StringProperty()
-
-class GameFormTable(ModelForm):
-    _model_class = Game
-
-class GameForm(ModelForm):
-    _model_class = Game
-
-def salvar(**propriedades):
+def salvar(_logged_user , **propriedades):
     game_form = GameForm(**propriedades)
     erros = game_form.validate()
     if erros:
@@ -74,5 +71,26 @@ def salvar(**propriedades):
             return TemplateResponse(contexto, 'temporario/criar/form.html')
     else:
         jogo=game_form.fill_model()
-        jogo.put()
+        game_key = jogo.put()
+        user_key = _logged_user.key
+        autor = Autor(origin=user_key, destination=game_key)
+        autor.put()
         return RedirectResponse(router.to_path(editar))
+
+
+class Game(ndb.Model):
+    tit=ndb.StringProperty(required=True)
+    map=ndb.StringProperty(required=True)
+    qtd=ndb.IntegerProperty(default=1)
+    tmp=ndb.IntegerProperty()
+    grup=ndb.StringProperty()
+
+class GameForm(ModelForm):
+    _model_class = Game
+
+class GameFormTable(ModelForm):
+    _model_class = Game
+
+class Autor(Arc):
+    origin = ndb.KeyProperty(required=True)
+    destination = ndb.KeyProperty(Game, required=True)
