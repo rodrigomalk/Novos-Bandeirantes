@@ -1,10 +1,10 @@
-{% extends '/temporario/editar/base.html' %}
+{% extends '/temporario/jogar/base.html' %}
 
 {% block conteudo %}
     <div class="col-md-12 column">
         <div class="conteudo">
             <div class="well">
-                <h1>Selecione o jogo</h1>
+                <h1>Lista de Jogos</h1>
                 <table class="table">
                     <thead>
                     <tr>
@@ -23,8 +23,6 @@
                         <td>{{ 'Unica Tentativa' if jogo.qtd == '1' else jogo.qtd}}</td>
                         <td>{{ 'Sem Limite' if jogo.tmp == '' else '%s %s' %(jogo.tmp, 'horas') }}</td>
                         <td>{{ 'Jogo Aberto' if jogo.grup == '' else jogo.grup}}</td>
-                        <td><a href="{{ jogo.edit_path }}"><span class="glyphicon glyphicon-pencil" style="color: #080808"></span> </a></td>
-                        <td><a href="{{ jogo.delete_path }}"><span class="glyphicon glyphicon-trash" style="color: #080808"></span> </a></td>
                     </tr>
                     {% endfor %}
                 </table>
