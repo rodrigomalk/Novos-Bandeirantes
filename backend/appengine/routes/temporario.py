@@ -9,19 +9,6 @@ from gaegraph.model import Arc
 from tekton.gae.middleware.redirect import RedirectResponse
 
 @no_csrf
-def jogar():
-    query=Game.query()
-    jogo_lista = query.fetch()
-    form = GameFormTable()
-    jogo_lista = [form.fill_with_model(jogo) for jogo in jogo_lista]
-    editar_form_path=router.to_path(editar_form)
-    deletar_form_path=router.to_path(deletar_form)
-    for jogo in jogo_lista:
-        jogo['delete_path']='%s/%s'%(editar_form_path, jogo['id'])
-    contexto = {'jogo_lista': jogo_lista}
-    return TemplateResponse(contexto)
-
-@no_csrf
 def index(_logged_user):
     user_key = _logged_user.key
     query = Autor.query(Autor.origin == user_key)
@@ -35,6 +22,19 @@ def index(_logged_user):
     for jogo in jogo_lista:
         jogo['edit_path']='%s/%s'%(editar_form_path, jogo['id'])
         jogo['delete_path']='%s/%s'%(deletar_form_path, jogo['id'])
+    contexto = {'jogo_lista': jogo_lista}
+    return TemplateResponse(contexto)
+
+@no_csrf
+def jogar():
+    query=Game.query()
+    jogo_lista = query.fetch()
+    form = GameFormTable()
+    jogo_lista = [form.fill_with_model(jogo) for jogo in jogo_lista]
+    editar_form_path=router.to_path(editar_form)
+    deletar_form_path=router.to_path(deletar_form)
+    for jogo in jogo_lista:
+        jogo['delete_path']='%s/%s'%(editar_form_path, jogo['id'])
     contexto = {'jogo_lista': jogo_lista}
     return TemplateResponse(contexto)
 
@@ -74,7 +74,7 @@ def atualizar(jogo_id, **propriedades):
         jogo.put()
         return RedirectResponse(router.to_path(index))
 
-def salvar(_logged_user , **propriedades):
+def salvar(_logged_user, **propriedades):
     game_form = GameForm(**propriedades)
     erros = game_form.validate()
     if erros:
@@ -95,7 +95,7 @@ class Game(ndb.Model):
     tit=ndb.StringProperty(required=True)
     map=ndb.StringProperty(required=True)
     qtd=ndb.IntegerProperty(default=1)
-    tmp=ndb.IntegerProperty()
+    tmp=ndb.IntegerProperty(default=0)
     grup=ndb.StringProperty()
 
 class GameForm(ModelForm):
