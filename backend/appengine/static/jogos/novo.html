@@ -1,0 +1,30 @@
+<div class="well" ng-app="teste">
+    <h1>Criando jogos</h1>
+
+    <div class="form-group ">
+        <label for="titInput" class="control-label">Título </label>
+        <input id="titInput" type="text" class="form-control" ng-model="game.tit">
+    </div>
+
+    <div class="form-group ">
+        <label for="mapInput" class="control-label">Mapas </label>
+        <input id="mapInput" type="text" class="form-control" ng-model="game.map">
+    </div>
+
+    <div class="form-group ">
+        <label for="qtdInput" class="control-label">Chances (Padrão 1) </label>
+        <input id="qtdInput" type="text" class="form-control" ng-model="game.qtd">
+    </div>
+
+    <div class="form-group ">
+        <label for="tmpInput" class="control-label">Tempo Limite (Padrão Sem Limite) </label>
+        <input id="tmpInput" type="text" class="form-control" ng-model="game.tmp">
+    </div>
+
+    <div class="form-group ">
+        <label for="grpInput" class="control-label">Grupo </label>
+        <input id="grpInput" type="text" class="form-control" ng-model="game.grp">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Criar</button>
+</div>

@@ -47,6 +47,9 @@ def criar():
 def deletar_form(jogo_id):
     chave = ndb.Key(Game, int(jogo_id))
     chave.delete()
+    query=Autor.find_origins(chave)
+    chaves_autores=query.fetch(keys_only=True)
+    ndb.delete_multi(chaves_autores)
     return RedirectResponse(router.to_path(index))
 
 @no_csrf

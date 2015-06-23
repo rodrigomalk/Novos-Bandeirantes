@@ -1,10 +1,26 @@
 {% extends '/temporario/base.html' %}
+{% block js %}
+<script type="text/javascript" src="/static/angular/js/angular.min.js"></script>
+<script type="text/javascript" src="/static/jogos/jogo_form.js"></script>
+<script type="text/javascript">
+    var jogoApp = angular.module('jogoApp', ['jogoModulo']).controller("JogoController", function($scope){
+        $scope.jogo={tit: 'Teste', map: 'Teste', qtd: '1', tmp: 'Sem limite', grp: 'Jogo Aberto'};
+        $scope.mostra=false;
 
+        $scope.formOnOff=function(){
+            $scope.mostra=!$scope.mostra;
+        }
+    });
+</script>
+{% endblock %}
 {% block conteudo %}
-    <div class="col-md-12 column">
+    <div class="col-md-12"  ng-app="jogoApp" ng-controller="JogoController">
         <div class="conteudo">
             <div class="well">
-                <input name="" type="button" class="btn btn-primary" onClick="javascript:location.href=('temporario/criar')" value="Novo Jogo">
+                <button class="btn btn-primary" ng-click="formOnOff()">Novo Jogo</button>
+                <br /><br />
+                <input type="text" ng-model="jogo.tit" />
+                <jogoform ng-show="mostra"></jogoform>
                 <table class="table">
                     <thead>
                     <tr>

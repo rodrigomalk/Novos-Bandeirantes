@@ -76,3 +76,7 @@ a, a:hover, a:visited{
     height: 100px;
     padding-top: 2px;
 }
+
+.well {
+    border-radius: 10px 40px;
+}
