@@ -1,0 +1,27 @@
+{% extends 'jogos/base.html' %}
+{% block body %}
+    {% set jogo=jogo or None %}
+    {% set errors=errors or None %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <br/>
+
+                <div class="well">
+                    <h1 class="text-center">{% trans %}Jogo Form{% endtrans %}</h1>
+
+                    <form action="{{ save_path }}" method="post" role="form">
+                        {{ csrf_input() }}
+                        {{ form_input(_('tit'),'tit',jogo.tit,errors.tit) }}
+                        {{ form_input(_('map'),'map',jogo.map,errors.map) }}
+                        {{ form_input(_('qtd'),'qtd',jogo.qtd,errors.qtd) }}
+                        {{ form_input(_('tmp'),'tmp',jogo.tmp,errors.tmp) }}
+                        {{ form_input(_('grp'),'grp',jogo.grp,errors.grp) }}
+                        <button type="submit" class="btn btn-success">{% trans %}Save{% endtrans %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
