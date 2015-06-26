@@ -13,7 +13,7 @@ from tekton.gae.middleware.webapp2_dependencies import Webapp2Dependencies
 from gaepermission.middleware import LoggedUserMiddleware, PermissionMiddleware
 
 APP_URL = 'https://tekton-fullstack.appspot.com'
-SENDER_EMAIL = 'contato@precisaweb.com.br'
+SENDER_EMAIL = ''
 DEFAULT_LOCALE = 'en_US'
 DEFAULT_TIMEZONE = 'US/Eastern'
 LOCALES = ['en_US', 'pt_BR']
