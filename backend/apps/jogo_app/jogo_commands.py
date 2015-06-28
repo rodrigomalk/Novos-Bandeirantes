@@ -12,7 +12,6 @@ class JogoSaveForm(ModelForm):
     Form used to save and update Jogo
     """
     _model_class = Jogo
-    _include = [Jogo.foto]
 
 
 class JogoForm(ModelForm):
