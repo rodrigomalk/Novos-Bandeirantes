@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-from gaegraph.business_base import NodeSearch, DeleteNode
 from jogo_app.jogo_commands import ListJogoCommand, SaveJogoCommand, UpdateJogoCommand, JogoForm,\
     GetJogoCommand, DeleteJogoCommand
 
