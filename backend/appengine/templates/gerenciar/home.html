@@ -3,9 +3,31 @@
 <script type="text/javascript" src="/static/angular/js/angular.min.js"></script>
 <script type="text/javascript" src="/static/jogos/jogo_form.js"></script>
 <script type="text/javascript">
-    var jogoApp = angular.module('jogoApp', ['jogoModulo']).controller("JogoController", function($scope){
-        $scope.jogo={};
+    var jogoApp = angular.module('jogoApp', ['jogoModulo']).controller("JogoController", function($scope, $http, $window){
+        $scope.game={};
         $scope.mostra=false;
+        $scope.games = [];
+
+        $scope.list = function(){
+          $http.post("/jogos/rest/index").success(function(result){
+            $scope.games = result;
+            console.log(result);
+          });
+        };
+
+        $window.onload = $scope.list;
+
+        $scope.remove = function(game_id, index){
+          $http.post("/jogos/rest/delete", {jogo_id: game_id}).success(function(){
+            $scope.games.splice(index, 1);
+          });
+        };
+
+        $scope.edit = function(game){
+          delete game.creation
+          $scope.game = game;
+          $scope.formOnOff();
+        };
 
         $scope.formOnOff=function(){
             $scope.mostra=!$scope.mostra;
@@ -19,7 +41,7 @@
             <div class="well">
                 <button class="btn btn-primary" ng-click="formOnOff()">Novo Jogo</button>
                 <br /><br />
-                <jogoform ng-show="mostra" form-on-off="formOnOff()" game="jogo"></jogoform>
+                <jogoform ng-show="mostra" form-on-off="formOnOff()" game="game"></jogoform>
                 <table class="table">
                     <thead>
                     <tr>
@@ -31,17 +53,21 @@
                         <th></th>
                     </tr>
                     </thead>
-                    {% for jogo in jogo_lista %}
-                    <tr>
-                        <td>{{ jogo.tit }}</td>
-                        <td>{{ jogo.map }}</td>
-                        <td>{{ 'Unica Tentativa' if jogo.qtd == '1' else jogo.qtd}}</td>
-                        <td>{{ 'Sem Limite' if jogo.tmp == '' else '%s %s' %(jogo.tmp, 'horas') }}</td>
-                        <td>{{ 'Jogo Aberto' if jogo.grup == '' else jogo.grup}}</td>
-                        <td><a href="{{ jogo.edit_path }}"><span class="glyphicon glyphicon-pencil" style="color: #080808"></span> </a></td>
-                        <td><a href="{{ jogo.delete_path }}"><span class="glyphicon glyphicon-trash" style="color: #080808"></span> </a></td>
+                    <tr ng-repeat="game in games">
+                        <td ng-bind="game.tit"></td>
+                        <td ng-bind="game.map"></td>
+                        <td ng-if="game.qtd == 1">Unica Tentativa</td>
+                        <td ng-if="game.qtd != 1" ng-bind="game.qtd"></td>
+                        <td ng-if="!game.tmp"> Sem limite</td>
+                        <td ng-if="game.tmp" ng-bind="game.tmp">
+                          Horas
+                        </td>
+                        <td ng-if="!game.grup">Jogo Aberto</td>
+                        <td ng-if="game.grup" ng-bind="game.grup"></td>
+                        <td><a ng-click="edit(game)"><span class="glyphicon glyphicon-pencil" style="color: #080808"></span> Editar</a></td>
+                        <td><a ng-click="remove(game.id, $index - 1)"><span class="glyphicon glyphicon-trash" style="color: #080808"></span> Excluir</a></td>
+
                     </tr>
-                    {% endfor %}
                 </table>
             </div>
 		</div>
