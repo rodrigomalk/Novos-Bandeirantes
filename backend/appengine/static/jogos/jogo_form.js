@@ -1,4 +1,4 @@
-var jogoModulo=angular.module('jogoModulo', [])
+var jogoModulo = angular.module('jogoModulo', [])
 
 jogoModulo.directive('jogoform', function(){
     return{
@@ -10,13 +10,13 @@ jogoModulo.directive('jogoform', function(){
             formOnOff: "&"
         },
         controller:function($scope, $http){
-            $scope.salvar=function(){
+            $scope.salvar = function(){
                 $http.post('/jogos/rest/new', $scope.game).success(function(game){
                     console.log(game);
-                }).error(function(erros){
+                }).error(function(errors){
                     console.log(errors);
                 });
-            }
+            };
         }
     };
 });
