@@ -1,30 +1,36 @@
 <div class="well" ng-app="teste">
     <h1>Criando jogos</h1>
 
-    <div class="form-group ">
+    <div class="form-group" ng-class="{true: '', false: 'has-error'}[errors.tit==null]">
         <label for="titInput" class="control-label">Título </label>
         <input id="titInput" type="text" class="form-control" ng-model="game.tit">
+        <span class="help-block" ng-show="errors.tit">{{ errors.tit }}</span>
     </div>
 
-    <div class="form-group ">
+    <div class="form-group" ng-class="{true: '', false: 'has-error'}[errors.map==null]">
         <label for="mapInput" class="control-label">Mapas </label>
         <input id="mapInput" type="text" class="form-control" ng-model="game.map">
+        <span class="help-block" ng-show="errors.map">{{ errors.map }}</span>
     </div>
 
-    <div class="form-group ">
+    <div class="form-group" ng-class="{true: '', false: 'has-error'}[errors.qtd==null]">
         <label for="qtdInput" class="control-label">Chances (Padrão 1) </label>
         <input id="qtdInput" type="text" class="form-control" ng-model="game.qtd">
+        <span class="help-block" ng-show="errors.qtd">{{ errors.qtd }}</span>
     </div>
 
-    <div class="form-group ">
+    <div class="form-group" ng-class="{true: '', false: 'has-error'}[errors.tmp==null]">
         <label for="tmpInput" class="control-label">Tempo Limite (Padrão Sem Limite) </label>
         <input id="tmpInput" type="text" class="form-control" ng-model="game.tmp">
+        <span class="help-block" ng-show="errors.tmp">{{ errors.tmp }}</span>
     </div>
 
-    <div class="form-group ">
+    <div class="form-group" ng-class="{true: '', false: 'has-error'}[errors.grp==null]">
         <label for="grpInput" class="control-label">Grupo </label>
         <input id="grpInput" type="text" class="form-control" ng-model="game.grp">
+        <span class="help-block" ng-show="errors.grp">{{ errors.grp }}</span>
     </div>
 
-    <button type="submit" ng-click="salvar()" class="btn btn-primary">{_editOrCreate_}</button>
+    <button type="submit" ng-click="salvar()" class="btn btn-primary" ng-hide="salvando">{_editOrCreate_}</button>
+    <img src="/static/img/ajax.gif" ng-show="salvando"/>
 </div>

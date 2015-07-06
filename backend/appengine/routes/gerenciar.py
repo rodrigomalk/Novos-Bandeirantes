@@ -31,10 +31,6 @@ def jogar():
     jogo_lista = query.fetch()
     form = GameFormTable()
     jogo_lista = [form.fill_with_model(jogo) for jogo in jogo_lista]
-    editar_form_path=router.to_path(editar_form)
-    deletar_form_path=router.to_path(deletar_form)
-    for jogo in jogo_lista:
-        jogo['delete_path']='%s/%s'%(editar_form_path, jogo['id'])
     contexto = {'jogo_lista': jogo_lista}
     return TemplateResponse(contexto)
 
