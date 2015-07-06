@@ -3,10 +3,15 @@
 <script type="text/javascript" src="/static/angular/js/angular.min.js"></script>
 <script type="text/javascript" src="/static/jogos/jogo_form.js"></script>
 <script type="text/javascript">
-    var jogoApp = angular.module('jogoApp', ['jogoModulo']).controller("JogoController", function($scope, $http, $window){
+
+    var jogoApp = angular.module('jogoApp', ['jogoModulo']).config(function($interpolateProvider){
+      $interpolateProvider.startSymbol("{_");
+      $interpolateProvider.endSymbol("_}");
+    }).controller("JogoController", function($scope, $http, $window){
         $scope.game={};
         $scope.mostra=false;
         $scope.games = [];
+        $scope.is_editing = false;
 
         $scope.list = function(){
           $http.post("/jogos/rest/index").success(function(result){
@@ -26,12 +31,22 @@
         $scope.edit = function(game){
           delete game.creation
           $scope.game = game;
+          $scope.mostra = true;
+          $scope.is_editing = true;
+          $scope.edit_or_create = 'Editar';
+
+        };
+
+        $scope.new = function(){
           $scope.formOnOff();
+          $scope.is_editing = false;
+          $scope.edit_or_create = 'Criar';
         };
 
         $scope.formOnOff=function(){
             $scope.mostra=!$scope.mostra;
-        }
+
+        };
     });
 </script>
 {% endblock %}
@@ -39,9 +54,10 @@
     <div class="col-md-12"  ng-app="jogoApp" ng-controller="JogoController">
         <div class="conteudo">
             <div class="well">
-                <button class="btn btn-primary" ng-click="formOnOff()">Novo Jogo</button>
+                <button class="btn btn-primary" ng-click="new()">Novo Jogo</button>
                 <br /><br />
-                <jogoform ng-show="mostra" form-on-off="formOnOff()" game="game"></jogoform>
+                <jogoform ng-show="mostra" form-on-off="formOnOff()" game="game"
+                    is-editing="is_editing" edit-or-create="edit_or_create"></jogoform>
                 <table class="table">
                     <thead>
                     <tr>
