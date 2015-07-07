@@ -29,7 +29,7 @@
         };
 
         $scope.edit = function(game){
-          delete game.creation
+          delete game.creation;
           $scope.game = game;
           $scope.mostra = true;
           $scope.is_editing = true;
@@ -57,7 +57,7 @@
             <div class="well">
                 <button class="btn btn-primary" ng-click="new()">Novo Jogo</button>
                 <br /><br />
-                <jogoform ng-show="mostra" form-on-off="formOnOff()" game="game"
+                <jogoform ng-show="mostra" form-on-off="formOnOff()" game="game" games="games"
                     is-editing="is_editing" edit-or-create="edit_or_create"></jogoform>
                 <table class="table">
                     <thead>
@@ -72,8 +72,11 @@
                     </tr>
                     </thead>
                     <tr ng-repeat="game in games">
-                        <td>
+                        <td ng-if="game.foto">
                             <img src="{_game.foto_}" width="40px" height="40px"/>
+                        </td>
+                        <td ng-if="!game.foto">
+                            Sem foto
                         </td>
                         <td ng-bind="game.tit"></td>
                         <td ng-bind="game.map"></td>
