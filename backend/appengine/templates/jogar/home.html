@@ -1,0 +1,60 @@
+{% extends '/jogar/base.html' %}
+{% block js %}
+<script type="text/javascript" src="/static/angular/js/angular.min.js"></script>
+<script type="text/javascript" src="/static/jogos/jogo_form.js"></script>
+<script type="text/javascript">
+
+    var jogoApp = angular.module('jogoApp', ['jogoModulo']).config(function($interpolateProvider){
+      $interpolateProvider.startSymbol("{_");
+      $interpolateProvider.endSymbol("_}");
+    }).controller("JogoController", function($scope, $http, $window){
+        $scope.game={};
+        $scope.mostra=false;
+        $scope.games = [];
+        $scope.is_editing = false;
+
+        $scope.list = function(){
+          $http.post("/jogar/jogar").success(function(result){
+            $scope.games = result;
+            console.log(result);
+          });
+        };
+
+        $window.onload = $scope.list;
+
+    });
+</script>
+{% endblock %}
+{% block conteudo %}
+    <div class="col-md-12"  ng-app="jogoApp" ng-controller="JogoController">
+        <div class="conteudo">
+            <div class="well">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Titulo</th>
+                        <th>Mapa</th>
+                        <th>Chances</th>
+                        <th>Tempo</th>
+                        <th>Grupo</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="game in games">
+                        <td ng-bind="game.tit"></td>
+                        <td ng-bind="game.map"></td>
+                        <td ng-if="game.qtd == 1">Unica Tentativa</td>
+                        <td ng-if="game.qtd != 1" ng-bind="game.qtd"></td>
+                        <td ng-if="!game.tmp"> Sem limite</td>
+                        <td ng-if="game.tmp" ng-bind="game.tmp">
+                          Horas
+                        </td>
+                        <td ng-if="!game.grup">Jogo Aberto</td>
+                        <td ng-if="game.grup" ng-bind="game.grup"></td>
+
+                    </tr>
+                </table>
+            </div>
+		</div>
+    </div>
+{% endblock %}
