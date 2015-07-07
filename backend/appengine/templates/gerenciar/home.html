@@ -29,7 +29,7 @@
         };
 
         $scope.edit = function(game){
-          delete game.creation
+          delete game.creation;
           $scope.game = game;
           $scope.mostra = true;
           $scope.is_editing = true;
@@ -47,6 +47,7 @@
             $scope.mostra=!$scope.mostra;
 
         };
+
     });
 </script>
 {% endblock %}
@@ -87,8 +88,13 @@
                         </td>
                         <td ng-if="!game.grup">Jogo Aberto</td>
                         <td ng-if="game.grup" ng-bind="game.grup"></td>
+<<<<<<< HEAD
                         <td><button class="btn btn" ng-click="edit(game)"><span class="glyphicon glyphicon-pencil" style="color: #080808"></span></button></td>
                         <td><button class="btn btn" ng-click="remove(game.id, $index - 1)"><span class="glyphicon glyphicon-trash" style="color: #080808"></span></button></td>
+=======
+                        <td><a ng-click="edit(game)"><span class="glyphicon glyphicon-pencil" style="color: #080808"></span> Editar</a></td>
+                        <td><a ng-click="remove(game.id, $index - 1)"><span class="glyphicon glyphicon-trash" style="color: #080808"></span> Excluir</a></td>
+>>>>>>> origin/master
                         <td class="container">
                             <form action="{{ upload_url }}" enctype="multipart/form-data" method="post">
                                 <input type="hidden" name="id" value="{_game.id_}">
