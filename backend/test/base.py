@@ -35,6 +35,8 @@ class GAETestCase(unittest.TestCase):
         self.testbed.init_memcache_stub()
         self.testbed.init_mail_stub()
         self.testbed.init_taskqueue_stub()
+        self.testbed.init_app_identity_stub()
+        self.testbed.init_blobstore_stub()
 
     def tearDown(self):
         self.testbed.deactivate()
