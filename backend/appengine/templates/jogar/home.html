@@ -37,6 +37,7 @@
                         <th>Chances</th>
                         <th>Tempo</th>
                         <th>Grupo</th>
+                        <th>Trof&eacute;u</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -51,6 +52,12 @@
                         </td>
                         <td ng-if="!game.grup">Jogo Aberto</td>
                         <td ng-if="game.grup" ng-bind="game.grup"></td>
+                        <td ng-if="game.foto">
+                            <img src="{_game.foto_}" width="40px" height="40px"/>
+                        </td>
+                        <td ng-if="!game.foto">
+                            <img src="/static/img/default.jpg" width="40px" height="40px"/>
+                        </td>
 
                     </tr>
                 </table>

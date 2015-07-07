@@ -1,6 +1,7 @@
 body{
     background-image: url("../../static/img/mapa_fundo.jpg");
     color: #FFFFFF;
+    background-attachment: fixed;
 }
 
 .clearfix {

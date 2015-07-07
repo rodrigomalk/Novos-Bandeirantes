@@ -62,7 +62,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Foto</th>
+                        <th>Trof&eacute;u</th>
                         <th>Titulo</th>
                         <th>Mapa</th>
                         <th>Chances</th>
@@ -76,7 +76,7 @@
                             <img src="{_game.foto_}" width="40px" height="40px"/>
                         </td>
                         <td ng-if="!game.foto">
-                            Sem foto
+                            <img src="/static/img/default.jpg" width="40px" height="40px"/>
                         </td>
                         <td ng-bind="game.tit"></td>
                         <td ng-bind="game.map"></td>
@@ -94,7 +94,7 @@
                             <form action="{{ upload_url }}" enctype="multipart/form-data" method="post">
                                 <input type="hidden" name="id" value="{_game.id_}">
                                 <input type="file" id="file" name="files[]">
-                                <input type="submit" value="enviar">
+                                <input class="btn btn-primary" type="submit" value="enviar">
                             </form>
                         </td>
                     </tr>
