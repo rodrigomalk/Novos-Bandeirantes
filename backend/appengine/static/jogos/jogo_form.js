@@ -18,7 +18,8 @@ jogoModulo.directive('jogoform', function(){
             $scope.salvar = function(){
                 $scope.salvando = true;
               if ($scope.isEditing){
-                save_or_edit_url = '/jogos/rest/edit';
+                save_or_edit_url = '/jogos/rest/edit'
+                  $scope.formOnOff();
                 $scope.game.jogo_id = $scope.game.id;
               }
               else{
