@@ -47,6 +47,7 @@
             $scope.mostra=!$scope.mostra;
 
         };
+
     });
 </script>
 {% endblock %}
@@ -70,6 +71,9 @@
                     </tr>
                     </thead>
                     <tr ng-repeat="game in games">
+                        <td>
+                            <img src="{_game.foto_}" width="40px" height="40px"/>
+                        </td>
                         <td ng-bind="game.tit"></td>
                         <td ng-bind="game.map"></td>
                         <td ng-if="game.qtd == 1">Unica Tentativa</td>
@@ -82,7 +86,13 @@
                         <td ng-if="game.grup" ng-bind="game.grup"></td>
                         <td><a ng-click="edit(game)"><span class="glyphicon glyphicon-pencil" style="color: #080808"></span> Editar</a></td>
                         <td><a ng-click="remove(game.id, $index - 1)"><span class="glyphicon glyphicon-trash" style="color: #080808"></span> Excluir</a></td>
-
+                        <td class="container">
+                            <form action="{{ upload_url }}" enctype="multipart/form-data" method="post">
+                                <input type="hidden" name="id" value="{_game.id_}">
+                                <input type="file" id="file" name="files[]">
+                                <input type="submit" value="enviar">
+                            </form>
+                        </td>
                     </tr>
                 </table>
             </div>

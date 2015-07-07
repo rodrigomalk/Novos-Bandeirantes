@@ -10,4 +10,5 @@ class Jogo(Node):
     qtd = ndb.IntegerProperty(default=1)
     tmp = ndb.IntegerProperty(default=0)
     grp = ndb.StringProperty(default='Jogo Aberto')
+    foto = ndb.StringProperty(required=False)
 
