@@ -10,10 +10,10 @@ jogoModulo.directive('jogoform', function(){
             games: "=",
             isEditing: "=?",
             editOrCreate: "=?",
-            formOnOff: "&"
+            formOnOff: "&",
         },
         controller:function($scope, $http){
-            $scope.salvando = false;
+            $scope.salvando = false
            var save_or_edit_url =  '/jogos/rest/new';
             $scope.salvar = function(){
                 $scope.salvando = true;
