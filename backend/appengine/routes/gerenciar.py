@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from config.template_middleware import TemplateResponse
+from routes.jogos import download
+from jogo_app.jogo_model import Jogo
 from gaecookie.decorator import no_csrf
 from tekton import router
 from google.appengine.ext import ndb
 from gaeforms.ndb.form import ModelForm
 from gaegraph.model import Arc
+from google.appengine.ext import blobstore
+from google.appengine.api.app_identity.app_identity import get_default_gcs_bucket_name
 from tekton.gae.middleware.redirect import RedirectResponse
 
 @no_csrf
@@ -17,13 +21,29 @@ def index(_logged_user):
     jogo_lista = ndb.get_multi(game_keys)
     form = GameFormTable()
     jogo_lista = [form.fill_with_model(jogo) for jogo in jogo_lista]
-    editar_form_path=router.to_path(editar_form)
-    deletar_form_path=router.to_path(deletar_form)
+    editar_form_path = router.to_path(editar_form)
+    deletar_form_path = router.to_path(deletar_form)
+
+    success_url = router.to_path(upload)
+    bucket = get_default_gcs_bucket_name()
+    upload_url = blobstore.create_upload_url(success_url, gs_bucket_name=bucket)
     for jogo in jogo_lista:
         jogo['edit_path']='%s/%s'%(editar_form_path, jogo['id'])
         jogo['delete_path']='%s/%s'%(deletar_form_path, jogo['id'])
-    contexto = {'jogo_lista': jogo_lista}
+    contexto = {'jogo_lista': jogo_lista, "upload_url": upload_url}
     return TemplateResponse(contexto)
+
+@no_csrf
+def upload(_handler, **jogos_properties):
+    if jogos_properties.get('files'):
+        blob_infos = _handler.get_uploads("files[]")
+        blob_key = blob_infos[0].key()
+        avatar = router.to_path(download, blob_key)
+        cmd = Jogo.get_by_id(long(jogos_properties['id']))
+        cmd.foto = avatar
+        cmd.put()
+        return RedirectResponse(router.to_path(index))
+
 
 @no_csrf
 def jogar():

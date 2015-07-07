@@ -56,11 +56,12 @@
             <div class="well">
                 <button class="btn btn-primary" ng-click="new()">Novo Jogo</button>
                 <br /><br />
-                <jogoform ng-show="mostra" form-on-off="formOnOff()" game="game"
+                <jogoform ng-show="mostra" form-on-off="formOnOff()" game="game" games="games"
                     is-editing="is_editing" edit-or-create="edit_or_create"></jogoform>
                 <table class="table">
                     <thead>
                     <tr>
+                        <th>Foto</th>
                         <th>Titulo</th>
                         <th>Mapa</th>
                         <th>Chances</th>
@@ -70,6 +71,12 @@
                     </tr>
                     </thead>
                     <tr ng-repeat="game in games">
+                        <td ng-if="game.foto">
+                            <img src="{_game.foto_}" width="40px" height="40px"/>
+                        </td>
+                        <td ng-if="!game.foto">
+                            Sem foto
+                        </td>
                         <td ng-bind="game.tit"></td>
                         <td ng-bind="game.map"></td>
                         <td ng-if="game.qtd == 1">Unica Tentativa</td>
@@ -80,9 +87,15 @@
                         </td>
                         <td ng-if="!game.grup">Jogo Aberto</td>
                         <td ng-if="game.grup" ng-bind="game.grup"></td>
-                        <td><a ng-click="edit(game)"><span class="glyphicon glyphicon-pencil" style="color: #080808"></span> Editar</a></td>
-                        <td><a ng-click="remove(game.id, $index - 1)"><span class="glyphicon glyphicon-trash" style="color: #080808"></span> Excluir</a></td>
-
+                        <td><button class="btn btn" ng-click="edit(game)"><span class="glyphicon glyphicon-pencil" style="color: #080808"></span></button></td>
+                        <td><button class="btn btn" ng-click="remove(game.id, $index - 1)"><span class="glyphicon glyphicon-trash" style="color: #080808"></span></button></td>
+                        <td class="container">
+                            <form action="{{ upload_url }}" enctype="multipart/form-data" method="post">
+                                <input type="hidden" name="id" value="{_game.id_}">
+                                <input type="file" id="file" name="files[]">
+                                <input type="submit" value="enviar">
+                            </form>
+                        </td>
                     </tr>
                 </table>
             </div>

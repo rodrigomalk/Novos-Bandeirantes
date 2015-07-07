@@ -7,6 +7,7 @@ jogoModulo.directive('jogoform', function(){
         templateUrl: '/static/jogos/novo.html',
         scope:{
             game: '=',
+            games: "=",
             isEditing: "=?",
             editOrCreate: "=?",
             formOnOff: "&"
@@ -22,6 +23,7 @@ jogoModulo.directive('jogoform', function(){
               }
               else{
                 save_or_edit_url = '/jogos/rest/new';
+                  $scope.games.push($scope.game);
               }
               $http.post(save_or_edit_url, $scope.game).success(function(game){
                   console.log(game);
