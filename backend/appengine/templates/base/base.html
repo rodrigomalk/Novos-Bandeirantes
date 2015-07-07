@@ -83,7 +83,11 @@
 							</ul>
 						</li>-->
 						<li>
-							<a href="#">Sair</a>
+							<form action="{{ _logout_path }}" method="post" class="text-center">
+								<button class="btn btn-menu" type="submit">{% trans %}
+									Sair{% endtrans %}</button>
+								{{ csrf_input() }}
+							</form>
 						</li>
 					</ul>
                     {% endmacro %}

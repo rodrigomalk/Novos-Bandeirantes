@@ -81,3 +81,15 @@ a, a:hover, a:visited{
 .well {
     border-radius: 10px 40px;
 }
+
+.btn.btn-menu {
+    border-radius: 10px 40px 10px 10px;
+    background-color:transparent;
+    margin-top:5px;
+    color: #FFFFFF;
+    box-shadow: 1px 1px 4px #CCCCCC;
+}
+
+.btn.btn-men:hover{
+    color: #FFFFFF;
+}
