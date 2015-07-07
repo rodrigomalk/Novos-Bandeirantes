@@ -73,7 +73,9 @@
                     </thead>
                     <tr ng-repeat="game in games">
                         <td ng-if="game.foto">
-                            <img src="{_game.foto_}" width="40px" height="40px"/>
+                            <a download="{_game.foto_}" href="{_game.foto_}">
+                                <img src="{_game.foto_}" width="40px" height="40px"/>
+                            </a>
                         </td>
                         <td ng-if="!game.foto">
                             Sem foto
