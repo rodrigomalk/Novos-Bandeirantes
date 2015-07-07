@@ -26,11 +26,6 @@ jogoModulo.directive('jogoform', function(){
               }
               $http.post(save_or_edit_url, $scope.game).success(function(game){
                   console.log(game);
-                  $scope.game.tit='';
-                  $scope.game.map='';
-                  $scope.game.qtd='';
-                  $scope.game.tmp='';
-                  $scope.game.grp='';
                   $scope.salvando = false;
                   $scope.formOnOff();
                   if (save_or_edit_url === '/jogos/rest/new')

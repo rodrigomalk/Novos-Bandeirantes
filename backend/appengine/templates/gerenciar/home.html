@@ -73,9 +73,7 @@
                     </thead>
                     <tr ng-repeat="game in games">
                         <td ng-if="game.foto">
-                            <a download="{_game.foto_}" href="{_game.foto_}">
-                                <img src="{_game.foto_}" width="40px" height="40px"/>
-                            </a>
+                            <img src="{_game.foto_}" width="40px" height="40px"/>
                         </td>
                         <td ng-if="!game.foto">
                             <img src="/static/img/default.jpg" width="40px" height="40px"/>
@@ -88,10 +86,10 @@
                         <td ng-if="game.tmp" ng-bind="game.tmp">
                           Horas
                         </td>
-                        <td ng-if="!game.grup">Jogo Aberto</td>
-                        <td ng-if="game.grup" ng-bind="game.grup"></td>
+                        <td ng-if="!game.grp">Jogo Aberto</td>
+                        <td ng-if="game.grp" ng-bind="game.grp"></td>
                         <td><button class="btn btn" ng-click="edit(game)"><span class="glyphicon glyphicon-pencil" style="color: #080808"></span></button></td>
-                        <td><button class="btn btn" ng-click="remove(game.id, $index - 1)"><span class="glyphicon glyphicon-trash" style="color: #080808"></span></button></td>
+                        <td><button class="btn btn" ng-click="remove(game.id, $index - 0)"><span class="glyphicon glyphicon-trash" style="color: #080808"></span></button></td>
                         <td class="container">
                             <form action="{{ upload_url }}" enctype="multipart/form-data" method="post">
                                 <input type="hidden" name="id" value="{_game.id_}">
