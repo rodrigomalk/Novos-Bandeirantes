@@ -27,7 +27,7 @@ def new(_resp, _logged_user, **jogo_properties):
 
 def edit(_resp, jogo_id, **jogo_properties):
     cmd = jogo_facade.update_jogo_cmd(jogo_id, **jogo_properties)
-    return _save_or_update_json_response(cmd, _resp)
+    return update_json_response(cmd, _resp)
 
 
 def delete(_resp, jogo_id):
@@ -51,6 +51,15 @@ def _save_or_update_json_response(cmd, _logged_user, _resp):
     user_key = _logged_user.key
     autor = Autor(origin=user_key, destination=jogo)
     autor.put()
+    jogo_form = jogo_facade.jogo_form()
+    return JsonResponse(jogo_form.fill_with_model(jogo))
+
+def update_json_response(cmd, _resp):
+    try:
+        jogo = cmd()
+    except CommandExecutionException:
+        _resp.status_code = 500
+        return JsonResponse(cmd.errors)
     jogo_form = jogo_facade.jogo_form()
     return JsonResponse(jogo_form.fill_with_model(jogo))
 
