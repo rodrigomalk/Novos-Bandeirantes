@@ -80,11 +80,9 @@
                         </td>
                         <td ng-bind="game.tit"></td>
                         <td ng-bind="game.map"></td>
-                        <td ng-if="!game.qtd">Unica Tentativa</td>
-                        <td ng-if="game.qtd == 1">Unica Tentativa</td>
+                        <td ng-if="!game.qtd || game.qtd <= 1">Unica Tentativa</td>
                         <td ng-if="game.qtd > 1" ng-bind="game.qtd"></td>
-                        <td ng-if="!game.tmp"> Sem limite</td>
-                        <td ng-if="game.tmp == 0"> Sem limite</td>
+                        <td ng-if="!game.tmp || game.tmp == 0"> Sem limite</td>
                         <td ng-if="game.tmp > 0" ng-bind="game.tmp"><span> Horas</span></td>
                         <td ng-if="!game.grp">Jogo Aberto</td>
                         <td ng-if="game.grp" ng-bind="game.grp"></td>
