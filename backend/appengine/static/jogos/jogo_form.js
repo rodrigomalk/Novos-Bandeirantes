@@ -23,7 +23,6 @@ jogoModulo.directive('jogoform', function(){
               }
               else{
                 save_or_edit_url = '/jogos/rest/new';
-                  $scope.games.push($scope.game);
               }
               $http.post(save_or_edit_url, $scope.game).success(function(game){
                   console.log(game);
@@ -34,6 +33,7 @@ jogoModulo.directive('jogoform', function(){
                   $scope.game.grp='';
                   $scope.salvando = false
                   $scope.formOnOff();
+                  $scope.games.push($scope.game);
               }).error(function(errors){
                   $scope.errors=errors;
                   console.log(errors);
