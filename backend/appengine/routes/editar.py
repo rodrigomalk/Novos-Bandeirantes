@@ -7,8 +7,9 @@ from tekton.gae.middleware.redirect import RedirectResponse
 from google.appengine.ext import ndb
 from gaeforms.ndb.form import ModelForm
 from gaegraph.model import Arc
-from routes.criar import Game
-from routes.criar import GameForm
+
+from models import Game
+from forms import GameFormTable, GameForm
 
 @no_csrf
 def index():
@@ -52,7 +53,3 @@ def salvar(jogo_id, **propriedades):
         game_form.fill_model(jogo)
         jogo.put()
         RedirectResponse(router.to_path(index))
-
-
-class GameFormTable(ModelForm):
-    _model_class = Game

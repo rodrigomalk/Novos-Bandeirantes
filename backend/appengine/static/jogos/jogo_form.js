@@ -11,15 +11,16 @@ jogoModulo.directive('jogoform', function(){
             isEditing: "=?",
             editOrCreate: "=?",
             formOnOff: "&",
+            crudService: "="
         },
         controller:function($scope, $http){
-            $scope.salvando = false
-           var save_or_edit_url =  '/jogos/rest/new';
+            $scope.salvando = false;
+            var save_or_edit_url =  '/jogos/rest/new';
             $scope.salvar = function(){
                 $scope.salvando = true;
               if ($scope.isEditing){
                 $scope.game.jogo_id = $scope.game.id;
-                save_or_edit_url = '/jogos/rest/edit';
+                $scope.save_or_edit_url = '/jogos/rest/edit';
 
               }
               else{

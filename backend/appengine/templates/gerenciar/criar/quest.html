@@ -1,0 +1,17 @@
+{% extends '/temporario/criar/base.html' %}
+
+{% block conteudo %}
+    <div class="col-md-12 column">
+        <div class="conteudo">
+            <div class="well">
+                <h1>Criando perguntas</h1>
+                <form action="{{ criar_pergunta }}" method="post" role="form">
+                    {{ csrf_input() }}
+                    {{ form_input( 'Pergunta', 'pergunta', '', '') }}
+                    {{ form_input( 'Resposta', 'resposta', '', '') }}
+                    <button type="submit" class="btn btn-success">Criar</button>
+                </form>
+            </div>
+		</div>
+    </div>
+{% endblock %}

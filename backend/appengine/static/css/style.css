@@ -19,9 +19,9 @@ b {
     text-shadow: #FFFFFF 2px 2px 2px, #FFFFFF -2px -2px 2px;
 }
 
-a, a:hover, a:visited{
+/*a, a:hover, a:visited{
     color: #FFFFFF;
-}
+}*/
 
 .navbar{
     background-color: RGBA(00,00,00,0.9);
