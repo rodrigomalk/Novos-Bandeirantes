@@ -4,9 +4,8 @@ from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
 from gaepermission.decorator import login_not_required
 from tekton import router
-from gaegraph.model import Node
 from google.appengine.ext import ndb
-from gaeforms.ndb.form import ModelForm
+from forms import GameForm
 from tekton.gae.middleware.redirect import RedirectResponse
 
 
@@ -15,14 +14,6 @@ from tekton.gae.middleware.redirect import RedirectResponse
 def index():
     contexto={'criar_modelo': router.to_path(salvar)}
     return TemplateResponse(contexto)
-
-class Game(Node):
-    tit=ndb.StringProperty(required=True)
-    map=ndb.StringProperty(required=True)
-    grup=ndb.StringProperty()
-
-class GameForm(ModelForm):
-    _model_class = Game
 
 def salvar(**propriedades):
     game_form = GameForm(**propriedades)
