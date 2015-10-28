@@ -27,13 +27,13 @@ def index(_logged_user):
     deletar_form_path = router.to_path(deletar_form)
 
     success_url = router.to_path(upload)
-    associar_pergunta_url = router.to_path(associar_pergunta)
+    pergunta_url = router.to_path(pergunta)
     bucket = get_default_gcs_bucket_name()
     upload_url = blobstore.create_upload_url(success_url, gs_bucket_name=bucket)
     for jogo in jogo_lista:
         jogo['edit_path'] = '%s/%s' % (editar_form_path, jogo['id'])
         jogo['delete_path'] = '%s/%s' % (deletar_form_path, jogo['id'])
-    contexto = {'jogo_lista': jogo_lista, "upload_url": upload_url, "associar_pergunta_url": associar_pergunta_url}
+    contexto = {'jogo_lista': jogo_lista, "upload_url": upload_url, "pergunta_url": pergunta_url}
     return TemplateResponse(contexto)
 
 
@@ -120,27 +120,12 @@ def salvar(_logged_user, **propriedades):
 
 
 @no_csrf
-def associar_pergunta(game_id):
+def pergunta(game_id):
     quest_form = QuestForm()
     quests = [quest_form.fill_with_model(quest) for quest in Quest.query().fetch()]
 
-    return TemplateResponse({"quests": quests, "game_id": game_id}, template_path="gerenciar/associar_pergunta.html")
+    return TemplateResponse({"quests": quests, "game_id": game_id}, template_path="gerenciar/pergunta.html")
 
-def quest(game_id, **propriedades):
-    game_form = GameForm(**propriedades)
-    erros = game_form.validate()
-    if erros:
-            contexto={'criar_pergunta': router.to_path(salvar),
-                      'game': game_form,
-                      'erros': erros}
-            return TemplateResponse(contexto, 'temporario/criar/form.html')
-    else:
-        jogo = game_form.fill_model()
-        game_key = jogo.put()
-        user_key = _logged_user.key
-        autor = Autor(origin=user_key, destination=game_key)
-        autor.put()
-        return RedirectResponse(router.to_path(index))
 
 class Autor(Arc):
     origin = ndb.KeyProperty(required=True)
