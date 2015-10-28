@@ -8,7 +8,8 @@ class Game(Node):
     map=ndb.StringProperty(required=True)
     grup=ndb.StringProperty()
 
+
 class Quest(ndb.Model):
-	perg=ndb.StringProperty(required=True)
-	resp=ndb.StringProperty(required=True)
+	question=ndb.StringProperty(required=True)
+	answer=ndb.StringProperty(required=True)
 	jog=ndb.KeyProperty()
