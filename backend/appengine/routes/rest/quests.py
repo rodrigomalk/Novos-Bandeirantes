@@ -14,22 +14,29 @@ def all(game_id):
         return JsonResponse([quest.to_dict(exclude=["jog"]) for quest in quests])
     raise Exception("game id: %s not found" % game_id)
 
+
 @no_csrf
-def add(question, answer, game_id):
+def add(question, answer, game_id, id=None):
     game = Game.get_by_id(long(game_id))
+
     if game is None:
-        game = Game(tit="", map="", grup="").put()
-        quest_key = Quest(question=question, answer=answer, jog=game).put()
+        raise Exception("game id: %s not found" % game_id)
+    if id is not None:
+        quest = Quest.get_by_id(long(id))
+        quest.answer = answer
+        quest.question = question
+        quest_key = quest.put()
     else:
         quest_key = Quest(question=question, answer=answer, jog=game.key).put()
 
     return json.dumps({"quest_id": quest_key.id()})
 
+
 @no_csrf
 def delete(quest_id):
     quest = Quest.get_by_id(long(quest_id))
     if quest is not None:
-        quest.delete()
+        quest.key.delete()
         return json.dumps({})
     raise Exception("quest id: %s not found" % quest_id)
 

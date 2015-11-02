@@ -19,25 +19,29 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="quest in quests">
-                            <td>
-                                {_quest.question_}
-                            </td>
-                            <td >
-                                {_quest.answer_}
-                            </td>
-                            <td>
-                                <button>Editar</button>
-                                <button>Excluir</button>
-                            </td>
+                                <td>
+                                    <p ng-show="quest.viewing_mode && quest.viewing_mode !== undefined">{_quest.question_}</p>
+                                    <input ng-hide="quest.viewing_mode || quest.viewing_mode === undefined" type="text" ng-model="quest.question">
+                                </td>
+                                <td >
+                                    <p ng-show="quest.viewing_mode && quest.viewing_mode !== undefined">{_quest.answer_}</p>
+                                    <input ng-hide="quest.viewing_mode || quest.viewing_mode === undefined" type="text" ng-model="quest.answer">
+                                </td>
+                                <td>
+                                    <button ng-show="quest.viewing_mode" ng-click="set_viewing_mode(quest, false)">Editar</button>
+                                    <button ng-hide="quest.viewing_mode" ng-click="save_quest(quest) ">Salvar</button>
+                                    <button ng-click="remove_quest($index)">Excluir</button>
+                                </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         <div ng-show="show_add_quest">
-            <form ng-submit="save_quest()">
+            <form ng-submit="validate_fields() && save_quest()">
                 <input type="text" ng-model="new_question" placeholder="Pergunta">
                 <input type="text" ng-model="new_answer" placeholder="Resposta">
-                <input type="submit" value="Salvar">
+                <input type="submit" value="Salvar" ng-disabled="has_empty_fields()">
+                <label class="text-danger">{_error_message_}</label>
             </form>
         </div>
         </div>
