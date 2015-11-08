@@ -1,10 +1,513 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+
+
+	<script type='text/javascript' src="/static/js/lib/jquery-1.11.1.min.js"></script>
+	<script type='text/javascript' src="/static/js/lib/bootstrap.js"></script>
+	<script type='text/javascript' src="/static/js/lib/bootstrap-modalmanager.js"></script>
+	<script type='text/javascript' src="/static/js/lib/bootstrap-modal.js"></script>
+	<script type='text/javascript' src="/static/js/lib/brick-1.0beta5.js"></script>
+	<script type='text/javascript' src="/static/js/lib/d3.v3.min.js"></script>
+	<script type='text/javascript' src="/static/js/lib/topojson.v1.min.js"></script>
+	<script type='text/javascript' src="/static/js/lib/Chart.js"></script>
+	<script type='text/javascript' src="/static/js/lib/datamaps.world.min.js" charset="iso-8859-1"></script>
+	<link rel="stylesheet" type="text/css" href="/static/css/lib/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/lib/bootstrap-modal.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/lib/brick-1.0beta5.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/lib/font-awesome.min.css">
+
+  <style type='text/css'>
+    body {
+  overflow-x: hidden; }
+
+  #conteudo {
+    height: 100%;
+    width: 100%;
+    background-color: #FFFFFF; }
+
+    #menu {
+      display: block;
+      position: relative;
+      margin-left: 30%;
+      margin-top: 10px; }
+
+      .bot {
+        background-image: url("data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%3F%3E%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20version%3D%221.0%22%3E%3Cdefs%3E%3ClinearGradient%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%22100%25%22%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22rgb%28255%2C255%2C255%29%22%20stop-opacity%3D%220.1%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22rgb%280%2C0%2C0%29%22%20stop-opacity%3D%220.1%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20fill%3D%22url%28%23g%29%22%20width%3D%22100%25%22%20height%3D%22100%25%22/%3E%3C/svg%3E");
+        background-image: -webkit-linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));
+        background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));
+        background-origin: border-box;
+        border: 4px solid rgba(0, 0, 0, 0.8);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px rgba(255, 255, 255, 0.1) inset;
+        border-radius: 0.25em;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 87.5%;
+        line-height: 1.5;
+        margin: 0.5em 0.5em 0 0;
+        padding: 0.25em 1em;
+        text-align: center;
+        white-space: nowrap; }
+        :hover.bot, :focus.bot {
+          background-image: url("data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%3F%3E%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20version%3D%221.0%22%3E%3Cdefs%3E%3ClinearGradient%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%22100%25%22%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22rgb%28128%2C128%2C128%29%22%20stop-opacity%3D%220.1%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22rgb%280%2C0%2C0%29%22%20stop-opacity%3D%220.1%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20fill%3D%22url%28%23g%29%22%20width%3D%22100%25%22%20height%3D%22100%25%22/%3E%3C/svg%3E");
+          background-image: -webkit-linear-gradient(rgba(128, 128, 128, 0.1), rgba(0, 0, 0, 0.1));
+          background-image: linear-gradient(rgba(128, 128, 128, 0.1), rgba(0, 0, 0, 0.1)); }
+          :active.bot {
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset; }
+
+.bot {
+  text-shadow: 0 -1px rgba(0, 0, 0, 0.25);
+  background-color: #0080ff;
+  border-radius: 99em;
+  color: white;
+  width: 200px;
+  font-size: 200%; }
+
+  #container {
+    position: absolute;
+    width: 413px;
+    height: 596px;
+    float: left;
+    left: 40%; }
+
+    #grafico {
+      margin-top: -70px; }
+
+      @media screen and (min-width: 1204px) {
+        .modal-open .page-container .navbar-fixed-top {
+          overflow: hidden;   }
+          #gra {
+            height: 277px;
+            float: right;   }
+}
+
+@media screen and (max-width: 1203px) {
+  body {
+    overflow-y: visible;   }
+    #header {
+      height: auto;   }
+      h1 {
+        font-size: 24px;   }
+        #menu {
+          margin-left: 20%;   }
+          #gra {
+            height: 277px;
+            float: right;   }
+}
+
+@media screen and (max-width: 953px) {
+  #menu {
+    margin-left: 20%;   }
+    #gra {
+      position: relative;
+      float: left;
+      height: 284px;
+      top: 540px;
+      right: -1px;   }
+}
+
+@media screen and (max-width: 493px) {
+  #menu {
+    display: none;   }
+    #container {
+      float: none;   }
+      #gra {
+        position: relative;
+        float: right;
+        height: 284px;
+        top: 540px;
+        right: -1px;
+        left: 120px;   }
+}
+
+.clickme {
+  width: 90px;
+  height: 70px;
+  background-color: #eee;
+  border-radius: 4px;
+  color: #666;
+  display: block;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  text-decoration: none;
+  float: left; }
+
+  .clear {
+    clear: both; }
+
+    .clickme:hover {
+      text-decoration: underline; }
+
+      h2 {
+        font-size: 36px;
+        text-indent: 20px;
+        margin-top: 10px; }
+
+        h1 {
+          font-size: 36px;
+          text-indent: 20px;
+          margin-top: 80px; }
+
+          .box {
+            background-color: #ccc;
+            border-radius: 4px;
+            color: #333;
+            margin: 5px 0;
+            padding: 5px 10px;
+            width: auto; }
+
+            #gra {
+              max-width: 500px;
+              background: linear-gradient(rgba(0, 153, 0, 0.8), rgba(255, 200, 0, 0.8) 50%, rgba(255,
+                            0, 0, 0.8));
+              padding-top: 10px;
+              margin-bottom: 100px;
+              margin-top: 100px;
+              margin-right: 10px; }
+
+              .voice {
+                width: 60px;
+                height: 60px;
+                float: right;
+                margin-right: 20px; }
+
+  </style>
+
+
+
+
+<script type='text/javascript'>//<![CDATA[
+$(window).load(function(){
+var botao = 0;
+first = true;
+var container = $("#container");
+indice = '';
+selecionar(botao);
+
+function selecionar(botao){
+    $('#container').empty();
+    container.appendTo('body');
+    var a = [];
+var b = {};
+var pop = [41281631,10426160,201032714,17248450,45925397,15007343,953605,221500,7356789,28674757,560157,3424595,28892735];
+var are = [2780400,1098581,8515767,756950,1138914,256370,214970,83846,406752,1285220,163821,176215,916445];
+var pa = [pop[0]/are[0],pop[1]/are[1],pop[2]/are[2],pop[3]/are[3],pop[4]/are[4],pop[5]/are[5],pop[6]/are[6],pop[7]/are[7],pop[8]/are[8],pop[9]/are[9],pop[10]/are[10],pop[11]/are[11],pop[12]/are[12]];
+    while (botao > 3){
+        botao-=3;
+    }
+        while (botao < 1 && !first){
+        botao+=3;
+    }
+    switch (botao)
+{
+    case 0:
+        titulo="América do Sul";
+        criarMapa(b);
+        criarGrafico(titulo, '');
+        first = false;
+        break;
+    case 1:
+        titulo="Índice de Desenvolvimento Humano";
+       a=[0.811,0.675,0.733,0.819,0.719,0.724,0.728,0.862,0.741,0.741,0.684,0.792,0.748];
+       b= { ARG: {fillKey: 'HIGH',},
+            BOL: {fillKey: 'LOW',},
+            BRA: {fillKey: 'MED',},
+            CHL: {fillKey: 'HIGH',},
+            COL: {fillKey: 'MED',},
+            ECU: {fillKey: 'MED',},
+            GUY: {fillKey: 'MED',},
+            FGU: {fillKey: 'HIGH',},
+            PRY: {fillKey: 'MED',},
+            PER: {fillKey: 'MED',},
+            SUR: {fillKey: 'LOW',},
+            URY: {fillKey: 'HIGH',},
+            VEN: {fillKey: 'MED',}     } ;
+        criarMapa(b)
+        criarGrafico(titulo, a);
+        break;
+    case 2:
+        titulo="Produto Interno Bruto (per capita)";
+        a=[17376,5099,12118,20114,10248,10055,5728,12165,7326,11148,9500,17466,13634];
+        b= {ARG: {fillKey: 'MED',},
+            BOL: {fillKey: 'LOW',},
+            BRA: {fillKey: 'MED',},
+            CHL: {fillKey: 'HIGH',},
+            COL: {fillKey: 'MED',},
+            ECU: {fillKey: 'MED',},
+            GUY: {fillKey: 'LOW',},
+            FGU: {fillKey: 'MED',},
+            PRY: {fillKey: 'LOW',},
+            PER: {fillKey: 'MED',},
+            SUR: {fillKey: 'MED',},
+            URY: {fillKey: 'MED',},
+            VEN: {fillKey: 'MED',}     } ;
+        criarMapa(b)
+        criarGrafico(titulo, a);
+        break;
+    case 3:
+        titulo="População por Km²";
+        a=pa;
+        b= {ARG: {fillKey: 'LOW',},
+            BOL: {fillKey: 'LOW',},
+            BRA: {fillKey: 'MED',},
+            CHL: {fillKey: 'MED',},
+            COL: {fillKey: 'HIGH',},
+            ECU: {fillKey: 'HIGH',},
+            GUY: {fillKey: 'LOW',},
+            FGU: {fillKey: 'LOW',},
+            PRY: {fillKey: 'MED',},
+            PER: {fillKey: 'MED',},
+            SUR: {fillKey: 'LOW',},
+            URY: {fillKey: 'MED',},
+            VEN: {fillKey: 'LOW',}     } ;
+        criarMapa(b)
+        criarGrafico(titulo, a);
+        break;
+}
+
+};
+function criarMapa(b){
+    var map = new Datamap({
+        scope: 'world',
+        element: document.getElementById('container'),
+            fills: {
+            HIGH: 'rgba(0,153,0,0.8)',
+            MED:  'rgba(255,200,0,0.8)',
+            LOW: 'rgba(255,0,0,0.8)',
+            defaultFill: 'rgba(13,13,255,0.8)'
+        },
+            setProjection: function(element, b) {
+            var projection = d3.geo.equirectangular()
+              .center([-53.8, -21.5])
+              .rotate([4.4, 0])
+              .scale(500)
+              .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+            var path = d3.geo.path()
+              .projection(projection);
+            return {path: path, projection: projection};
+        },
+    data : b,
+
+        geographyConfig: {
+            popupTemplate: function(geo, data) {
+                return ['<div class="hoverinfo"><strong>',
+                        geo.properties.name,
+                        '</strong></div>'].join('');
+            },
+            highlightOnHover: true,
+            popupOnHover: true,
+            highlightFillColor: 'a(6)',
+            highlightBorderColor: 'rgba(60, 15, 250, 0.6)',
+            highlightBorderWidth: 6
+        },
+         done: function(datamap) {
+        datamap.svg.selectAll('.datamaps-subunit').on('click', function (e) {
+    $("#nome").html(e.properties.name);
+    $("#pop").html('<i class="icon-user"></i>   População: ' + e.properties.populacao);
+    $("#cap").html('<i class="icon-home"></i>   Capital: ' + e.properties.capital);
+    $("#pib").html('<i class="icon-usd"></i>   PIB: US$ ' + e.properties.pib);
+    $("#idh").html('<i class="icon-signal"></i>   IDH: ' + e.properties.idh);
+    $("#area").html('<i class="icon-globe"></i>   Área Geográfica: ' + e.properties.area + ' km²');
+    $("#pt1").html('<a title="' + e.properties.pt1t + '"><img src="' + e.properties.pt1 + '" alt="' + e.properties.pt1t + 'title="' + e.properties.pt1t + '">');
+    $("#pt1t").html(e.properties.pt1t);
+    $("#pt1x").html(e.properties.pt1x);
+    $("#pt2").html('<a title="' + e.properties.pt2t + '"><img src="' + e.properties.pt2 + '" alt="' + e.properties.pt2t + 'title="' + e.properties.pt2t + '">');
+    $("#pt2t").html(e.properties.pt2t);
+    $("#pt2x").html(e.properties.pt2x);
+    $("#pt3").html('<a title="' + e.properties.pt3t + '"><img src="' + e.properties.pt3 + '" alt="' + e.properties.pt3t + 'title="' + e.properties.pt3t + '">');
+    $("#pt3t").html(e.properties.pt3t);
+    $("#pt3x").html(e.properties.pt3x);
+    $('#confirm')
+        .modal({ backdrop: 'static', keyboard: false })
+        .one('click', '[data-value]', function (e) {
+        });
+});
+    },
+    });
+};
+$('.box').hide();
+
+    $('.voice').click(function(botao, first) {
+
+  if ('webkitSpeechRecognition' in window) {
+  var recognition = new webkitSpeechRecognition();
+  recognition.continuous = true;
+  recognition.interimResults = true;
+   recognition.onstart = function( e ) {
+      console.log( e );
+
+  };
+  final_transcript = '';
+  recognition.onresult = function( event ) {
+    final_transcript = '';
+    for (var i = event.resultIndex; i < event.results.length; ++i) {
+      if (event.results[i].isFinal) {
+        final_transcript += event.results[i][0].transcript;
+      }
+    }
+    document.getElementById( 'speech' ).value = final_transcript;
+      if(final_transcript == 'i d h' || final_transcript == 'idh' || final_transcript == 'desenvolvimento humano' || final_transcript == 'índice de desenvolvimento humano'){
+          botao = 1;
+          selecionar(botao);
+          recognition.stop();
+      }
+      else if(final_transcript == 'pib' || final_transcript == 'produto interno bruto'){
+          botao = 2;
+          selecionar(botao);
+          recognition.stop();
+      }
+      else if(final_transcript == 'pop' || final_transcript == 'população' || final_transcript == 'população por quilômetro quadrado'){
+          botao = 3;
+          selecionar(botao);
+          recognition.stop();
+      }
+  };
+  recognition.start();
+};
+});
+
+$('.clickme').each(function() {
+    $(this).show(0).on('click', function(e) {
+        e.preventDefault();
+        $(this).next('.box').slideToggle('fast');
+    });
+});
+
+        function criarGrafico(titulo, a){
+
+$("#titulo").html(titulo);
+            if (a != ''){
+                $("#gra").html('<canvas id="myChart" width="550" height="400""></canvas>');
+var data = {
+	labels : ['Argentina', 'Bolívia', 'Brasil', 'Chile', 'Colômbia', 'Equador', 'Guiana', 'Guiana Francesa', 'Paraguai', 'Peru', 'Suriname', 'Uruguai', 'Venezuela'],
+	datasets : [
+		{
+			fillColor : "rgba(13,13,255,0.8)",
+			strokeColor : "rgba(60, 15, 250, 0.6)",
+            data: a
+        },
+
+	]
+}
+options = {
+	scaleOverlay : false,
+    scaleOverride : false,
+	scaleSteps : null,
+    scaleStepWidth : null,
+	scaleStartValue : null,
+	scaleLineColor : "rgba(0,0,0,.1)",
+	scaleLineWidth : 1,
+	scaleShowLabels : true,
+	scaleLabel : "<%=value%>",
+	scaleFontFamily : "'Arial'",
+	scaleFontSize : 16,
+    scaleFontStyle : "bold",
+    scaleFontColor : "#000",
+	scaleShowGridLines : true,
+	scaleGridLineColor : "rgba(0,0,0,.05)",
+	scaleGridLineWidth : 1,
+	barShowStroke : true,
+	barStrokeWidth : 2,
+	barValueSpacing : 2,
+	barDatasetSpacing : 2,
+	animation : true,
+	animationSteps : 60,
+	animationEasing : "easeOutQuart",
+	onAnimationComplete : null,
+}
+var ctx = document.getElementById("myChart").getContext("2d");
+new Chart(ctx).Bar(data,options);
+        };};
+
+$('.bot').click(function() {
+    botao = parseInt($(this).attr("value"));
+        selecionar(botao);
+});
+
+document.addEventListener('DOMComponentsLoaded', function(){
+
+    var deck = document.querySelector("#container");
+
+    Hammer(deck).on("swipeleft", function () {
+            botao++;
+            selecionar(botao);
+        });
+
+    Hammer(deck).on("swiperight", function () {
+            botao--;
+            selecionar(botao);
+        });
+
+});
+
+document.addEventListener('DOMComponentsLoaded', function(){
+
+    var buster = document.querySelector("#grafico");
+
+    Hammer(buster).on("swipeleft", function () {
+            botao++;
+            selecionar(botao);
+        });
+
+    Hammer(buster).on("swiperight", function () {
+            botao--;
+            selecionar(botao);
+        });
+
+});
+});//]]>
+
+</script>
+
+<script src="http://debug.phonegap.com/target/target-script-min.js#jsf_may"></script></head>
 <body>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div id="menu">
+    <button class="bot" value="1" alt="Índicie de Desenvolvimento Humano" title="Índicie de Desenvolvimento Humano"> IDH </button>
+    <button class="bot" value="2" alt="Produto Interno Bruto" title="Produto Interno Bruto"> PIB </button>
+    <button class="bot" value="3" alt="Habitantes por Km²" title="Habitantes por Km²"> Pop/Km² </button>
+        <button class="voice" aria-hidden="true" type="button"><img src="http://images.all-free-download.com/images/graphiclarge/microphone_normal_98138.jpg" /></button>
+</div>
+<br />
+<div class="clear"></div>
+<div id="container"></div><div id="info">
+    <div id="confirm" class="modal hide fade">
+        <div class="modal-body">
+            <h2 id="nome"></h2>
+            <p id="pop"></p>
+            <p id="cap"></p>
+            <p id="pib"></p>
+            <p id="idh"></p>
+            <p id="area"></p>
+            <i class="icon-picture"> </i>Pontos turísticos:<br />
+            <a href="#" class="clickme" id="pt1"></a>
+            <div class="box">
+                <h2 id="pt1t"></h2><br /><p id="pt1x"></p>
+            </div>
+            <a href="#" class="clickme" id="pt2"></a>
+            <div class="box">
+                <h2 id="pt2t"></h2><br /><p id="pt2x"></p>
+            </div>
+            <a href="#" class="clickme" id="pt3"></a>
+            <div class="box">
+                <h2 id="pt3t"></h2><br /><p id="pt3x"></p>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
+        </div>
+    </div>
+    <div id="speech"></div>
+</div>
+<div id="grafico">
+    <center><h1 id="titulo"></h1></center>
+    <div id="gra"></div>
+</div>
 
 </body>
+
 </html>
+
