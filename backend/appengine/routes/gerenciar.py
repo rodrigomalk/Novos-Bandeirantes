@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-from config.template_middleware import TemplateResponse
-from routes.jogos import download
-from jogo_app.jogo_model import Jogo
-from google.appengine.ext import ndb
+
 from gaecookie.decorator import no_csrf
-from tekton import router
-from models import Game, Quest
-from forms import GameForm, GameFormTable, QuestForm
-from gaegraph.model import Arc
-from google.appengine.ext import blobstore
 from google.appengine.api.app_identity.app_identity import get_default_gcs_bucket_name
+from google.appengine.ext import blobstore
+from google.appengine.ext import ndb
+from tekton import router
 from tekton.gae.middleware.redirect import RedirectResponse
+
+from arcos import Autor
+from config.template_middleware import TemplateResponse
+from forms import GameForm, GameFormTable, QuestForm
+from models import Game, Quest
+from routes.jogos import download
 
 
 @no_csrf
@@ -43,7 +44,7 @@ def upload(_handler, **jogos_properties):
         blob_infos = _handler.get_uploads("files[]")
         blob_key = blob_infos[0].key()
         avatar = router.to_path(download, blob_key)
-        cmd = Jogo.get_by_id(long(jogos_properties['id']))
+        cmd = Game.get_by_id(long(jogos_properties['id']))
         cmd.foto = avatar
         cmd.put()
         return RedirectResponse(router.to_path(index))
@@ -127,6 +128,3 @@ def pergunta(game_id):
     return TemplateResponse({"quests": quests, "game_id": game_id}, template_path="gerenciar/pergunta.html")
 
 
-class Autor(Arc):
-    origin = ndb.KeyProperty(required=True)
-    destination = ndb.KeyProperty(Game, required=True)

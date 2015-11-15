@@ -1,32 +1,22 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, unicode_literals
-import json
+from arcos import Autor
+from forms import GameFormTable
+from google.appengine.ext import ndb
 from config.template_middleware import TemplateResponse
 from gaepermission.decorator import login_not_required
-from tekton import router
 from gaecookie.decorator import no_csrf
-from jogo_app import jogo_facade
-from routes.jogos import new, edit
-from tekton.gae.middleware.redirect import RedirectResponse
 
 
 @no_csrf
 @login_not_required
-def index():
-    cmd = jogo_facade.list_jogos_cmd()
-    jogos = cmd()
-    edit_path = router.to_path(edit)
-    jogo_form = jogo_facade.jogo_form()
-
-    def localize_jogo(jogo):
-        jogo_dct = jogo_form.fill_with_model(jogo)
-        jogo_dct['edit_path'] = router.to_path(edit_path, jogo_dct['id'])
-        return jogo_dct
-
-    localized_jogos = [localize_jogo(jogo) for jogo in jogos]
-    context = {'jogos': localized_jogos,
-               'new_path': router.to_path(new)}
-    return TemplateResponse(context, 'jogos/home.html')
-
-
+def index(_logged_user):
+    user_key = _logged_user.key
+    query = Autor.query(Autor.origin == user_key)
+    autores = query.fetch()
+    game_keys = [autor.destination for autor in autores]
+    jogo_lista = ndb.get_multi(game_keys)
+    form = GameFormTable()
+    jogo_lista = [form.fill_with_model(jogo) for jogo in jogo_lista]
+    return TemplateResponse({"games": jogo_lista}, 'jogos/home.html')
