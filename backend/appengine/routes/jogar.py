@@ -1,17 +1,19 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
+
 from __future__ import absolute_import, unicode_literals
-from config.template_middleware import TemplateResponse
-from tekton.gae.middleware.json_middleware import JsonResponse
-from jogo_app import jogo_facade
+import json
 from gaecookie.decorator import no_csrf
+from config.template_middleware import TemplateResponse
+from models import Quest, Game
+
 
 @no_csrf
-def index():
-    return TemplateResponse(template_path='jogar/home.html')
-
-def jogar():
-    cmd = jogo_facade.list_jogos_cmd()
-    jogo_list = cmd()
-    jogo_form = jogo_facade.jogo_form()
-    jogo_dcts = [jogo_form.fill_with_model(m) for m in jogo_list]
-    return JsonResponse(jogo_dcts)
+def index(_logged_user, game_id):
+    game = Game.get_by_id(long(game_id))
+    quests = Quest.query().fetch()
+    quest_list = [quest.to_dict(exclude=["jog"]) for quest in quests if quest.jog.id() == game.key.id()]
+    dict_ = {
+        'game': json.dumps(game.to_dict()),
+        'quests': json.dumps(quest_list)
+    }
+    return TemplateResponse(context=dict_, template_path="jogar/jogar.html")

@@ -7,7 +7,11 @@ from google.appengine.ext import ndb
 class Game(Node):
     tit = ndb.StringProperty(required=True)
     map = ndb.StringProperty(required=True)
-    grup = ndb.StringProperty()
+    qtd = ndb.IntegerProperty(default=1)
+    tmp = ndb.IntegerProperty(default=0)
+    grp = ndb.StringProperty(default='Jogo Aberto')
+    foto = ndb.StringProperty(required=False)
+
 
 
 class Quest(ndb.Model):
