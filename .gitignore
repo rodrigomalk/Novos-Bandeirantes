@@ -13,7 +13,7 @@ build/
 develop-eggs/
 dist/
 eggs/
-lib/
+
 backend/appengine/apps/
 backend/appengine/lib/
 backend/plugins/appengine/lib/
