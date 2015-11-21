@@ -44,10 +44,15 @@ angular.module('questApp', []).config(function($locationProvider, $interpolatePr
                 answer: quest.answer,
                 id: quest.id
             };
-            $scope.set_viewing_mode(quest, true);
-        }
-        $http.post("/rest/quests/add", quest_to_save);
 
+        }
+        delete quest_to_save.viewing_mode;
+        $http.post("/rest/quests/add", quest_to_save).success(function(){
+            if (quest){
+                $scope.set_viewing_mode(quest, true);
+            };
+            $scope.set_viewing_mode(quest_to_save, true);
+        });
         $scope.new_question = "";
         $scope.new_answer = "";
         $scope.show_add_quest = false;
