@@ -27,11 +27,10 @@ jogoModulo.directive('jogoform', function(){
                 save_or_edit_url = '/jogos/rest/new';
               }
               $http.post(save_or_edit_url, $scope.game).success(function(game){
-                  console.log(game);
                   $scope.salvando = false;
                   $scope.formOnOff();
                   if (save_or_edit_url == '/jogos/rest/new')
-                    $scope.games.push($scope.game);
+                    $scope.games.push(game);
               }).error(function(errors){
                   $scope.errors=errors;
                   console.log(errors);
