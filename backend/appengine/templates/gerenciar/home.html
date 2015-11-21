@@ -13,14 +13,13 @@
         $scope.games = [];
         $scope.is_editing = false;
 
-        $scope.list = function(){
+        $scope.list_games = function(){
           $http.post("/jogos/rest/index").success(function(result){
             $scope.games = result;
-            console.log(result);
           });
         };
 
-        $window.onload = $scope.list;
+        $window.onload = $scope.list_games;
 
         $scope.remove = function(game_id, index){
           $http.post("/jogos/rest/delete", {jogo_id: game_id}).success(function(){
