@@ -2,7 +2,7 @@
 $(window).load(function(){
 var botao = 0;
 first = true;
-var container = $("#container");
+var containerm = $("#containerm");
 indice = '';
 selecionar(botao);
 function retornar(first, botao){
@@ -11,8 +11,8 @@ function retornar(first, botao){
     selecionar(botao)
 };
 function selecionar(botao){
-    $('#container').empty();
-    container.appendTo('body');
+    $('#containerm').empty();
+    containerm.appendTo('body');
     var a = [];
 var b = {};
 var pop = [41281631,10426160,201032714,17248450,45925397,15007343,953605,221500,7356789,28674757,560157,3424595,28892735];
@@ -27,13 +27,13 @@ var pa = [pop[0]/are[0],pop[1]/are[1],pop[2]/are[2],pop[3]/are[3],pop[4]/are[4],
     switch (botao)
 {
     case 0:
-        titulo="AmÈrica do Sul";
+        titulo="Am√©rica do Sul";
         criarMapa(b);
         criarGrafico(titulo, '');
         first = false;
         break;        
     case 1:
-        titulo="Õndice de Desenvolvimento Humano";
+        titulo="√çndice de Desenvolvimento Humano";
        a=[0.811,0.675,0.733,0.819,0.719,0.724,0.728,0.862,0.741,0.741,0.684,0.792,0.748];
        b= { ARG: {fillKey: 'HIGH',}, 
             BOL: {fillKey: 'LOW',},
@@ -71,7 +71,7 @@ var pa = [pop[0]/are[0],pop[1]/are[1],pop[2]/are[2],pop[3]/are[3],pop[4]/are[4],
         criarGrafico(titulo, a);
         break;
     case 3:
-        titulo="PopulaÁ„o por Km≤";
+        titulo="Popula√ß√£o por Km¬≤";
         a=pa;
         b= {ARG: {fillKey: 'LOW',}, 
             BOL: {fillKey: 'LOW',},
@@ -95,7 +95,7 @@ var pa = [pop[0]/are[0],pop[1]/are[1],pop[2]/are[2],pop[3]/are[3],pop[4]/are[4],
 function criarMapa(b){
     var map = new Datamap({
         scope: 'world',
-        element: document.getElementById('container'),
+        element: document.getElementById('containerm'),
             fills: {
             HIGH: 'rgba(0,153,0,0.8)',
             MED:  'rgba(255,200,0,0.8)',  
@@ -129,11 +129,11 @@ function criarMapa(b){
          done: function(datamap) {
         datamap.svg.selectAll('.datamaps-subunit').on('click', function (e) {
     $("#nome").html(e.properties.name);
-    $("#pop").html('<i class="icon-user"></i>   PopulaÁ„o: ' + e.properties.populacao);
+    $("#pop").html('<i class="icon-user"></i>   Popula√ß√£o: ' + e.properties.populacao);
     $("#cap").html('<i class="icon-home"></i>   Capital: ' + e.properties.capital);
     $("#pib").html('<i class="icon-usd"></i>   PIB: US$ ' + e.properties.pib);
     $("#idh").html('<i class="icon-signal"></i>   IDH: ' + e.properties.idh);
-    $("#area").html('<i class="icon-globe"></i>   ¡rea Geogr·fica: ' + e.properties.area + ' km≤'); 
+    $("#area").html('<i class="icon-globe"></i>   √Årea Geogr√°fica: ' + e.properties.area + ' km¬≤'); 
     $("#pt1").html('<a title="' + e.properties.pt1t + '"><img src="' + e.properties.pt1 + '" alt="' + e.properties.pt1t + 'title="' + e.properties.pt1t + '">');
     $("#pt1t").html(e.properties.pt1t);
     $("#pt1x").html(e.properties.pt1x);
@@ -172,7 +172,7 @@ $('.box').hide();
       } 
     }
     document.getElementById( 'speech' ).value = final_transcript;
-      if(final_transcript == 'i d h' || final_transcript == 'idh' || final_transcript == 'desenvolvimento humano' || final_transcript == 'Ìndice de desenvolvimento humano'){
+      if(final_transcript == 'i d h' || final_transcript == 'idh' || final_transcript == 'desenvolvimento humano' || final_transcript == '√≠ndice de desenvolvimento humano'){
           botao = 1;
           selecionar(botao);
           recognition.stop();
@@ -182,7 +182,7 @@ $('.box').hide();
           selecionar(botao);
           recognition.stop();
       }
-      else if(final_transcript == 'pop' || final_transcript == 'populaÁ„o' || final_transcript == 'populaÁ„o por quilÙmetro quadrado'){
+      else if(final_transcript == 'pop' || final_transcript == 'popula√ß√£o' || final_transcript == 'popula√ß√£o por quil√¥metro quadrado'){
           botao = 3;
           selecionar(botao);
           recognition.stop();
@@ -205,7 +205,7 @@ $("#titulo").html(titulo);
             if (a != ''){
                 $("#gra").html('<canvas id="myChart" width="550" height="400""></canvas>');
 var data = {
-	labels : ['Argentina', 'BolÌvia', 'Brasil', 'Chile', 'ColÙmbia', 'Equador', 'Guiana', 'Guiana Francesa', 'Paraguai', 'Peru', 'Suriname', 'Uruguai', 'Venezuela'],
+	labels : ['Argentina', 'Bol√≠via', 'Brasil', 'Chile', 'Col√¥mbia', 'Equador', 'Guiana', 'Guiana Francesa', 'Paraguai', 'Peru', 'Suriname', 'Uruguai', 'Venezuela'],
 	datasets : [
 		{
 			fillColor : "rgba(13,13,255,0.8)",
@@ -252,7 +252,7 @@ $('.bot').click(function() {
         
 document.addEventListener('DOMComponentsLoaded', function(){
 
-    var deck = document.querySelector("#container");
+    var deck = document.querySelector("#containerm");
     
     Hammer(deck).on("swipeleft", function () {
             botao++;

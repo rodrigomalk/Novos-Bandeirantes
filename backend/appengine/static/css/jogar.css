@@ -1,7 +1,7 @@
     body {
   overflow-x: hidden; }
 
-  #conteudo {
+  #mapa {
     height: 100%;
     width: 100%;
     background-color: #FFFFFF; }
@@ -43,7 +43,7 @@
   width: 200px;
   font-size: 200%; }
 
-  #container {
+  #containerm {
     position: absolute;
     width: 413px;
     height: 596px;
@@ -89,7 +89,7 @@
 @media screen and (max-width: 493px) {
   #menu {
     display: none;   }
-    #container {
+    #containerm {
       float: none;   }
       #gra {
         position: relative;

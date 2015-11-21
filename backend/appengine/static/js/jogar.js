@@ -2,9 +2,9 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $interpolateProvider.startSymbol("{_").endSymbol("_}");
 }).controller('jogarCtrl', function($scope, $window, AnswerService) {
 
-    var selecionar = function (botao, container) {
-        $('#container').empty();
-        container.appendTo('body');
+    var selecionar = function (botao, containerm) {
+        $('#containerm').empty();
+        containerm.appendTo('body');
         var a = [];
         var b = {};
         var pop = [41281631, 10426160, 201032714, 17248450, 45925397, 15007343, 953605, 221500, 7356789, 28674757, 560157, 3424595, 28892735];
@@ -60,7 +60,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     var criarMapa = function (b) {
         var map = new Datamap({
             scope: 'world',
-            element: document.getElementById('container'),
+            element: document.getElementById('containerm'),
             fills: {
                 HIGH: 'rgba(0,153,0,0.8)',
                 MED: 'rgba(255,200,0,0.8)',
@@ -148,9 +148,9 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $window.onload = function () {
         var botao = 0;
         first = true;
-        var container = $("#container");
+        var containerm = $("#containerm");
         indice = '';
-        selecionar(botao, container);
+        selecionar(botao, containerm);
 
     $('.bot').click(function () {
         botao = parseInt($(this).attr("value"));
@@ -158,4 +158,3 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     });
 };
 });
-

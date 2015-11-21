@@ -1,43 +1,54 @@
-<!DOCTYPE html>
+{% extends '/jogar/base.html' %}
+{% block html %}
 <html ng-app="jogarApp">
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title></title>
+{% endblock %}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block css %}
+	<link rel="stylesheet" type="text/css" href="/static/css/lib/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/lib/bootstrap-modal.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/lib/brick-1.0beta5.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/jogar.css">
+    <link href="/static/css/style.css" rel="stylesheet">
+    {% endblock %}
+
+    {% block js %}
     <script>
         var g_game = {{ game | safe}};
         var g_quest_list = {{ quests | safe}};
     </script>
+
 	<script type='text/javascript' src="/static/js/lib/jquery-1.11.1.min.js"></script>
 	<script type='text/javascript' src="/static/js/lib/bootstrap.js"></script>
     <script type='text/javascript' src="/static/js/lib/angular.min.js"></script>
 	<script type='text/javascript' src="/static/js/lib/bootstrap-modalmanager.js"></script>
 	<script type='text/javascript' src="/static/js/lib/bootstrap-modal.js"></script>
 	<script type='text/javascript' src="/static/js/lib/brick-1.0beta5.js"></script>
+    <script type="text/javascript" src="/static/js/scripts.js"></script>
 	<script type='text/javascript' src="/static/js/lib/d3.v3.min.js"></script>
 	<script type='text/javascript' src="/static/js/lib/topojson.v1.min.js"></script>
 	<script type='text/javascript' src="/static/js/lib/Chart.js"></script>
 	<script type='text/javascript' src="/static/js/lib/datamaps.world.min.js" charset="iso-8859-1"></script>
-	<link rel="stylesheet" type="text/css" href="/static/css/lib/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/lib/bootstrap-modal.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/lib/brick-1.0beta5.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/lib/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/jogar.css">
     <script type='text/javascript' src="/static/js/answer_service.js"></script>
     <script type='text/javascript' src="/static/js/jogar.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+    	<script src="/static/js/lib/html5shiv.js"></script>
+	<![endif]-->
+    {% endblock %}
 
-</head>
-<body ng-controller="jogarCtrl">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<br />
+    {% block body %}
+        <body ng-controller="jogarCtrl">
+    {% endblock %}
+
+    {% block conteudo %}
+<div id="mapa"><br />
 <div class="clear"></div>
-<div id="container"></div><div id="info">
+<div id="containerm"></div><div id="info">
 </div>
 <div id="grafico">
  <h1 style="text-align: center">Pergunta: {_actual_quest.question_}</h1>
     <h4>Tentativas: {_tries_}/{_game.qtd_}</h4>
-</div>
-
-</body>
-
-</html>
+</div></div>
+    {% endblock %}
 
