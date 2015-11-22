@@ -54,7 +54,7 @@
       margin-top: -70px; }
 
       @media screen and (min-width: 1204px) {
-        .modal-open .page-container .navbar-fixed-top {
+        .modal-open .page-containerm .navbar-fixed-top {
           overflow: hidden;   }
           #gra {
             height: 277px;
