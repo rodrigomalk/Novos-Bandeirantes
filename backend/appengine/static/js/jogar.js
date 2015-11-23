@@ -26,13 +26,33 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
 
     };
     $scope.game = g_game;
+    $scope.results = [];
+    //$scope.game_id = $location.search().game_id;
     $scope.quests_count = 1;
     $scope.quests = g_quest_list;
     $scope.actual_quest = $scope.quests[0];
     $scope.tries = 0;
     $scope.medal = true;
+    $scope.points = 0;
     now = new Date;
     $scope.time = now.getMilliseconds();
+    $scope.save_result = function(points, medal, game_id) {
+        result_to_save = {
+            points: points,
+            date: now.getDate,
+            medal: medal,
+            game_id: game_id,
+        };
+        $scope.results.push(result_to_save);
+        delete result_to_save.viewing_mode;
+        $http.post("/rest/results/add", result_to_save).success(function () {
+            if (result) {
+                $scope.set_viewing_mode(result, true);
+            };
+            $scope.set_viewing_mode(result_to_save, true);
+        });
+    };
+
     $scope.answer = function(answer){
         $scope.tries += 1;
         AnswerService.answer(answer, $scope.tries, $scope.actual_quest.id).success(function(result){
@@ -45,6 +65,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                     $scope.tries = 0;
                 }else{
                     alert("fim do Jogo");
+                    $scope.save_result($scope.points, $scope.medal, $scope.game_id);
                     window.location.href = "/jogos";
                 }
             }else{
@@ -53,22 +74,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                 if (!result.can_try_again){
                     if ($scope.quests_count  == $scope.quests.length){
                         alert("Fim de jogo");
-                        $scope.save_result = function(result) {
-                            var result_to_save = {
-                                points: $scope.points,
-                                date: now.getDate,
-                                medal: $scope.medal,
-                                game_id: $scope.game_id,
-                                id: result.id
-                            };
-                            $http.post("/rest/results/add", result_to_save).success(function () {
-                                if (quest) {
-                                    $scope.set_viewing_mode(result, true);
-                                }
-                                ;
-                                $scope.set_viewing_mode(result_to_save, true);
-                            });
-                        }
+                        $scope.save_result($scope.points, $scope.medal, $scope.game_id);
                         window.location.href = "/jogos";
                     }else {
                         $scope.actual_quest = $scope.quests[$scope.quests_count++];
