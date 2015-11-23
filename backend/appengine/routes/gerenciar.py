@@ -51,16 +51,6 @@ def upload(_handler, **jogos_properties):
 
 
 @no_csrf
-def jogar():
-    query = Game.query()
-    jogo_lista = query.fetch()
-    form = GameFormTable()
-    jogo_lista = [form.fill_with_model(jogo) for jogo in jogo_lista]
-    contexto = {'jogo_lista': jogo_lista}
-    return TemplateResponse(contexto)
-
-
-@no_csrf
 def criar():
     contexto = {'criar_modelo': router.to_path(salvar)}
     return TemplateResponse(contexto)

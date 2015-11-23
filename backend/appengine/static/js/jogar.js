@@ -30,10 +30,15 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $scope.quests = g_quest_list;
     $scope.actual_quest = $scope.quests[0];
     $scope.tries = 0;
+    $scope.medal = true;
+    now = new Date;
+    $scope.time = now.getMilliseconds();
     $scope.answer = function(answer){
         $scope.tries += 1;
         AnswerService.answer(answer, $scope.tries, $scope.actual_quest.id).success(function(result){
+            if (now.getMilliseconds() - $scope.time > 120000) $scope.medal = false;
             if (result.right){
+                $scope.points++;
                 alert("acertou");
                 if ($scope.quests_count  < $scope.quests.length){
                     $scope.actual_quest =  $scope.quests[$scope.quests_count++];

@@ -28,9 +28,9 @@
                                     <input ng-hide="quest.viewing_mode || quest.viewing_mode === undefined" type="text" ng-model="quest.answer">
                                 </td>
                                 <td>
-                                    <button ng-show="quest.viewing_mode" ng-click="set_viewing_mode(quest, false)">Editar</button>
-                                    <button ng-hide="quest.viewing_mode" ng-click="save_quest(quest) ">Salvar</button>
-                                    <button ng-click="remove_quest($index)">Excluir</button>
+                                    <button class="btn btn-success" ng-show="quest.viewing_mode" ng-click="set_viewing_mode(quest, false)"><span class="glyphicon glyphicon-pencil" style="color: #080808"></span></button>
+                                    <button class="btn btn-success" ng-hide="quest.viewing_mode" ng-click="save_quest(quest) ">Salvar</button>
+                                    <button class="btn btn-danger" ng-click="remove_quest($index)"><span class="glyphicon glyphicon-trash" style="color: #080808"></span></button>
                                 </td>
                         </tr>
                     </tbody>
@@ -40,7 +40,7 @@
             <form ng-submit="validate_fields() && save_quest()">
                 <input type="text" ng-model="new_question" placeholder="Pergunta">
                 <input type="text" ng-model="new_answer" placeholder="Resposta">
-                <input type="submit" value="Salvar" ng-disabled="has_empty_fields()">
+                <input class="btn btn-success" type="submit" value="Salvar" ng-disabled="has_empty_fields()">
                 <label class="text-danger">{_error_message_}</label>
             </form>
         </div>

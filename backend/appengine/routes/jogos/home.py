@@ -10,7 +10,6 @@ from gaecookie.decorator import no_csrf
 
 
 @no_csrf
-@login_not_required
 def index(_logged_user):
     user_key = _logged_user.key
     query = Autor.query(Autor.origin == user_key)
