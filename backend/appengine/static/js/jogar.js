@@ -46,10 +46,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
         $scope.results.push(result_to_save);
         delete result_to_save.viewing_mode;
         $http.post("/rest/results/add", result_to_save).success(function () {
-            if (result) {
-                $scope.set_viewing_mode(result, true);
-            };
-            $scope.set_viewing_mode(result_to_save, true);
+            // sua chamada do modal vai aqui
         });
     };
 
