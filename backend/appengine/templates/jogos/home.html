@@ -11,7 +11,6 @@
                         <th>Chances</th>
                         <th>Tempo</th>
                         <th>Grupo</th>
-                        <th>Trof&eacute;u</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -23,7 +22,7 @@
                         <td>{{ game.tmp }}</td>
                         <td>{{ game.grp }}</td>
                         <td>
-                            <a href="jogar/{{ game.id }}">Jogar</a></td>
+                            <a role="button" class="btn btn-primary" href="jogar/{{ game.id }}">Jogar</a></td>
                     </tr>
                     {%  endfor %}
                 </table>

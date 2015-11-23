@@ -45,6 +45,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                     $scope.tries = 0;
                 }else{
                     alert("fim do Jogo");
+                    window.location.href = "/jogos";
                 }
             }else{
                 alert("errou");
@@ -52,6 +53,23 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                 if (!result.can_try_again){
                     if ($scope.quests_count  == $scope.quests.length){
                         alert("Fim de jogo");
+                        $scope.save_result = function(result) {
+                            var result_to_save = {
+                                points: $scope.points,
+                                date: now.getDate,
+                                medal: $scope.medal,
+                                game_id: $scope.game_id,
+                                id: result.id
+                            };
+                            $http.post("/rest/results/add", result_to_save).success(function () {
+                                if (quest) {
+                                    $scope.set_viewing_mode(result, true);
+                                }
+                                ;
+                                $scope.set_viewing_mode(result_to_save, true);
+                            });
+                        }
+                        window.location.href = "/jogos";
                     }else {
                         $scope.actual_quest = $scope.quests[$scope.quests_count++];
                         $scope.tries = 0;

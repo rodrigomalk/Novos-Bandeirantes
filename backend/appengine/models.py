@@ -23,3 +23,16 @@ class Quest(ndb.Model):
         dict_ = super(Quest, self).to_dict(*args, **kwargs)
         dict_["id"] = self.key.id()
         return dict_
+
+class Result(Node):
+    user = ndb.StringProperty(required=True)
+    game = ndb.StringProperty(required=True)
+    name = ndb.StringProperty(required=True)
+    date_f = ndb.DateProperty()
+    date_l = ndb.DateProperty()
+    date_b = ndb.DateProperty()
+    first = ndb.IntegerProperty()
+    last = ndb.IntegerProperty()
+    best = ndb.IntegerProperty()
+    medal = ndb.BooleanProperty(default=False)
+    qtd = ndb.IntegerProperty(default = 0)
