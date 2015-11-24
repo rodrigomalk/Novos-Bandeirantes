@@ -133,6 +133,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
         });
     };
 
+
     var criarGrafico = function (titulo, a) {
 
         $("#titulo").html(titulo);

@@ -9,6 +9,19 @@ body{
     padding: 10px;
 }
 
+h2{
+    color: #000000;
+    padding-top: 10px;
+    padding-left: 30%;
+    text-shadow: #00aaff 1.5px 1.5px 1.5px, #00aaff -1.5px -1.5px 1.5px;
+}
+
+h3{
+    color: #000000;
+    top: 10px;
+    text-shadow: #00aaff 1px 1px 1px, #00aaff -1px -1px 1px;
+}
+
 h4{
     color: #000000;
     text-shadow: #FFFFFF 2px 2px 2px, #FFFFFF -2px -2px 2px;
@@ -16,7 +29,7 @@ h4{
 
 b {
     color: #000000;
-    text-shadow: #FFFFFF 2px 2px 2px, #FFFFFF -2px -2px 2px;
+    text-shadow: #00aaff 2px 2px 2px, #00aaff -2px -2px 2px;
 }
 
 /*a, a:hover, a:visited{
@@ -30,8 +43,12 @@ b {
     border-radius: 10px 40px;
 }
 
-.navbar-default .navbar-nav>li>a:hover{
+.navbar-default .navbar-nav>li>a{
     color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav>li>a:hover{
+    color: #00aaff;
 }
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
@@ -72,7 +89,7 @@ b {
     margin-left: 10px;
 }
 
-.container .jumbotron {
+.containerm .jumbotron {
     border-radius: 6px 30px;
     height: 100px;
     padding-top: 2px;
@@ -90,6 +107,8 @@ b {
     box-shadow: 1px 1px 4px #CCCCCC;
 }
 
-.btn.btn-men:hover{
-    color: #FFFFFF;
+.btn.btn-menu:hover{
+    color: #00aaff;
 }
+
+.containerm{padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}@media (min-width:768px){.containerm{width:750px}}@media (min-width:992px){.containerm{width:970px}}@media (min-width:1200px){.containerm{width:1170px}}.containerm-fluid{padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}
