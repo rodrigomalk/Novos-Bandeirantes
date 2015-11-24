@@ -1,6 +1,6 @@
 angular.module("jogarApp", ['answer_service']).config(function($interpolateProvider){
     $interpolateProvider.startSymbol("{_").endSymbol("_}");
-}).controller('jogarCtrl', function($scope, $http, $window, $timeout, AnswerService) {
+}).controller('jogarCtrl', function($location, $scope, $http, $window, $timeout, AnswerService) {
 
     var selecionar = function (botao, containerm) {
         $('#containerm').empty();
@@ -26,8 +26,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
 
     };
     $scope.game = g_game;
-    $scope.results = [];
-    //$scope.game_id = $location.search().game_id;
+    var results = [];
     $scope.quests_count = 1;
     $scope.quests = g_quest_list;
     $scope.actual_quest = $scope.quests[0];
@@ -35,24 +34,42 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $scope.medal = true;
     $scope.points = 0;
     $scope.resposta = "Sua resposta esta errada!";
-    now = new Date;
+    now = new Date();
     $scope.time = now.getMilliseconds();
-    $scope.save_result = function(points, medal, game_id) {
-        result_to_save = {
+
+    var add_result = function(points, medal){
+        /*
+        adiciona um novo resultado para a lista 
+        de resultados
+        */
+        var result = {
             points: points,
-            date: now.getDate,
+            date: now.getDate(),
             medal: medal,
-            game_id: game_id,
         };
-        $scope.results.push(result_to_save);
-        delete result_to_save.viewing_mode;
-        $http.post("/rest/results/add", result_to_save).success(function () {
+        console.table(result);
+        results.push(result)
+    };
+
+    var save_results = function(results, game_id) {
+        /* salva a lista de resultados no banco */
+        var data = {
+            results: results,
+            game_id: game_id
+        };
+        $http.post("/rest/results/add", data).success(function () {
             // sua chamada do modal vai aqui
         });
     };
 
     $scope.go_to_games_index = function(){
         $window.location.href = "/jogos";
+    };
+
+    $scope.show_modal = false;
+
+    $scope.close_modal = function(){
+        $scope.show_modal = false;
     };
 
     $scope.answer = function(answer){
@@ -62,21 +79,29 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
             if (result.right){
                 $scope.points++;
                 $scope.resposta = "Sua resposta esta certa!";
+                $scope.show_modal = true;
+
+                // proxima pergunta
                 if ($scope.quests_count  < $scope.quests.length){
                     $scope.actual_quest =  $scope.quests[$scope.quests_count++];
                     $scope.tries = 0;
+                    add_result($scope.points, $scope.medal);
                 }else{
-                    $scope.save_result($scope.points, $scope.medal, $scope.game_id);
+                    
+                    save_results(results, g_game.id);
                 }
             }else{
-
+                $scope.show_modal = true;
                 $scope.resposta = "Sua resposta esta errada!";
                 if (!result.can_try_again){
+                    // cabou o jogo
                     if ($scope.quests_count  == $scope.quests.length){
-                        $scope.save_result($scope.points, $scope.medal, $scope.game_id);
+                        save_results(results, g_game.id);
                     }else {
+                        // proxima pergunta
                         $scope.actual_quest = $scope.quests[$scope.quests_count++];
                         $scope.tries = 0;
+                        add_result($scope.points, $scope.medal);
                     }
                 }
             }
