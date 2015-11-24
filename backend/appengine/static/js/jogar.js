@@ -34,6 +34,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $scope.tries = 0;
     $scope.medal = true;
     $scope.points = 0;
+    $scope.resposta = "Sua resposta esta errada!";
     now = new Date;
     $scope.time = now.getMilliseconds();
     $scope.save_result = function(points, medal, game_id) {
@@ -59,21 +60,19 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
             if (now.getMilliseconds() - $scope.time > 120000) $scope.medal = false;
             if (result.right){
                 $scope.points++;
-                alert("acertou");
+                $scope.resposta = "Sua resposta esta certa!";
                 if ($scope.quests_count  < $scope.quests.length){
                     $scope.actual_quest =  $scope.quests[$scope.quests_count++];
                     $scope.tries = 0;
                 }else{
-                    alert("fim do Jogo");
                     $scope.save_result($scope.points, $scope.medal, $scope.game_id);
                     window.location.href = "/jogos";
                 }
             }else{
-                alert("errou");
 
+                $scope.resposta = "Sua resposta esta errada!";
                 if (!result.can_try_again){
                     if ($scope.quests_count  == $scope.quests.length){
-                        alert("Fim de jogo");
                         $scope.save_result($scope.points, $scope.medal, $scope.game_id);
                         window.location.href = "/jogos";
                     }else {
@@ -123,6 +122,12 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
             done: function (datamap) {
                 datamap.svg.selectAll('.datamaps-subunit').on('click', function (e) {
                     $scope.answer(e.properties.name);
+                    $("#nome").html(e.properties.name);
+                    $("#resposta").html($scope.resposta);
+                    $('#confirm')
+                        .modal({ backdrop: 'static', keyboard: false })
+                        .one('click', '[data-value]', function (e) {
+                    });
                 });
             },
         });
