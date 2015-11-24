@@ -1,27 +1,36 @@
+# coding: utf-8
 import json
+from google.appengine.ext import ndb
 from models import Game, Result
 from gaecookie.decorator import no_csrf
 from tekton.gae.middleware.json_middleware import JsonResponse
 
+
 @no_csrf
-def add(_logged_user, points, date, medal, game_id, id=None):
+def add(_logged_user, results, game_id):
+    """
+    results eh uma lista de dicionarios.
+    Cada dicionario possui:             
+            points: points
+            date: dia atual
+            medal: medal
+    """
     user_key = _logged_user.key
-    game_key = game_id.key
-    query = Result.query(Result.user == user_key and Result.game == game_key)
-    result = query.fetch()
+    game = Game.get_by_id(long(game_id))
+    results_to_save = []
 
-    if len(result) > 0:
-        result = Result.get_by_id(long(id))
-        result.last = points
-        result.date_l = date
-        if points > result.best:
-            result.best = points
-            result.date_b = date
-        if medal:
-            result.medal = medal
-        result.qtd += 1
-        result_key = result.put()
-    else:
-        result_key = Result(game = game_key, user = user_key, name = game_id.tit, first = points, date_f = date, last = points, date_l = date, best = points, date_b = date, medal = medal, qtd = 1).put()
-
-    return json.dumps({"result_id": result_key.id()})
+    # para cada result cria um novo objeto no Result
+    # e adiciona na lista de resulst pra salvar
+    for result in results:
+        points = result.get("points")
+        medal = result.get("medal")
+        results_to_save.append(Result(last=points, first=points, medal=medal, game=game.key, user=user_key, game_title=game.tit))
+        # result.date_l = date
+        # if points > result.best:
+        #     result.best = points
+        #     result.date_b = date
+        # if medal:
+        #     result.medal = medal
+        # result.qtd += 1
+        # result_key = result.put()
+    ndb.put_multi(results_to_save) # salva todos os resultados daquele jogo 

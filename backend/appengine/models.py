@@ -24,10 +24,10 @@ class Quest(ndb.Model):
         dict_["id"] = self.key.id()
         return dict_
 
-class Result(Node):
-    user = ndb.StringProperty(required=True)
-    game = ndb.StringProperty(required=True)
-    name = ndb.StringProperty(required=True)
+class Result(ndb.Model):
+    user = ndb.KeyProperty(required=True)
+    game = ndb.KeyProperty(required=True)
+    game_title = ndb.StringProperty(required=True)
     date_f = ndb.DateProperty()
     date_l = ndb.DateProperty()
     date_b = ndb.DateProperty()
