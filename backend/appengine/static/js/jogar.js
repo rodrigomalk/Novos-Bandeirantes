@@ -1,6 +1,6 @@
 angular.module("jogarApp", ['answer_service']).config(function($interpolateProvider){
     $interpolateProvider.startSymbol("{_").endSymbol("_}");
-}).controller('jogarCtrl', function($scope, $window, AnswerService) {
+}).controller('jogarCtrl', function($scope, $http, $window, $timeout, AnswerService) {
 
     var selecionar = function (botao, containerm) {
         $('#containerm').empty();
@@ -51,6 +51,10 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
         });
     };
 
+    $scope.go_to_games_index = function(){
+        $window.location.href = "/jogos";
+    };
+
     $scope.answer = function(answer){
         $scope.tries += 1;
         AnswerService.answer(answer, $scope.tries, $scope.actual_quest.id).success(function(result){
@@ -63,7 +67,6 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                     $scope.tries = 0;
                 }else{
                     $scope.save_result($scope.points, $scope.medal, $scope.game_id);
-                    window.location.href = "/jogos";
                 }
             }else{
 
@@ -71,7 +74,6 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                 if (!result.can_try_again){
                     if ($scope.quests_count  == $scope.quests.length){
                         $scope.save_result($scope.points, $scope.medal, $scope.game_id);
-                        window.location.href = "/jogos";
                     }else {
                         $scope.actual_quest = $scope.quests[$scope.quests_count++];
                         $scope.tries = 0;
