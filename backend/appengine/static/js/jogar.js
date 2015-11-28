@@ -33,7 +33,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $scope.tries = 0;
     $scope.medal = true;
     $scope.points = 0;
-    $scope.resposta = "Sua resposta esta errada!";
+    $scope.resposta_mensagem = "Sua resposta esta errada!";
     now = new Date();
     $scope.time = now.getMilliseconds();
 
@@ -45,7 +45,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
         var result = {
             points: points,
             date: now.getDate(),
-            medal: medal,
+            medal: medal
         };
         console.table(result);
         results.push(result)
@@ -66,7 +66,12 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
         $window.location.href = "/jogos";
     };
 
-    $scope.show_modal = false;
+    $scope.show_modal = function(){
+        $('#confirm')
+            .modal({ backdrop: 'static', keyboard: false })
+            .one('click');
+    };
+
 
     $scope.close_modal = function(){
         $scope.show_modal = false;
@@ -78,22 +83,22 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
             if (now.getMilliseconds() - $scope.time > 120000) $scope.medal = false;
             if (result.right){
                 $scope.points++;
-                $scope.resposta = "Sua resposta esta certa!";
-                $scope.show_modal = true;
-
+                $scope.resposta_mensagem = "Sua resposta esta certa!";
+                $scope.show_modal();
                 // proxima pergunta
                 if ($scope.quests_count  < $scope.quests.length){
                     $scope.actual_quest =  $scope.quests[$scope.quests_count++];
                     $scope.tries = 0;
                     add_result($scope.points, $scope.medal);
                 }else{
-                    
                     save_results(results, g_game.id);
                 }
             }else{
-                $scope.show_modal = true;
-                $scope.resposta = "Sua resposta esta errada!";
+                $scope.resposta_mensagem = "Sua resposta esta errada!";
+                $scope.show_modal();
                 if (!result.can_try_again){
+                    add_result($scope.points, $scope.medal);
+
                     // cabou o jogo
                     if ($scope.quests_count  == $scope.quests.length){
                         save_results(results, g_game.id);
@@ -101,7 +106,6 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                         // proxima pergunta
                         $scope.actual_quest = $scope.quests[$scope.quests_count++];
                         $scope.tries = 0;
-                        add_result($scope.points, $scope.medal);
                     }
                 }
             }
@@ -146,14 +150,8 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
             done: function (datamap) {
                 datamap.svg.selectAll('.datamaps-subunit').on('click', function (e) {
                     $scope.answer(e.properties.name);
-                    $("#nome").html(e.properties.name);
-                    $("#resposta").html($scope.resposta);
-                    $('#confirm')
-                        .modal({ backdrop: 'static', keyboard: false })
-                        .one('click', '[data-value]', function (e) {
-                    });
                 });
-            },
+            }
         });
     };
 
