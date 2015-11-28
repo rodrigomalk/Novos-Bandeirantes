@@ -24,7 +24,8 @@ def add(_logged_user, results, game_id):
     for result in results:
         points = result.get("points")
         medal = result.get("medal")
-        results_to_save.append(Result(last=points, first=points, medal=medal, game=game.key, user=user_key, game_title=game.tit))
+        title = game.to_dict()['tit']
+        results_to_save.append(Result(last=points, first=points, medal=medal, game=game.key, user=user_key, game_title=title))
         # result.date_l = date
         # if points > result.best:
         #     result.best = points
