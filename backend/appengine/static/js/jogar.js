@@ -31,35 +31,27 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $scope.quests = g_quest_list;
     $scope.actual_quest = $scope.quests[0];
     $scope.tries = 0;
-    $scope.medal = true;
+    $scope.won_medal = true;
     $scope.points = 0;
     $scope.resposta_mensagem = "Sua resposta esta errada!";
-    now = new Date();
-    $scope.time = now.getMilliseconds();
+    var before = new Date();
 
-    var add_result = function(points, medal){
-        /*
-        adiciona um novo resultado para a lista 
-        de resultados
-        */
-        var result = {
-            points: points,
-            date: now.getDate(),
-            medal: medal
-        };
-        console.table(result);
-        results.push(result)
+    var get_seconds_diff = function(before){
+        var now = new Date();
+        var timeDiff = now - before;
+        timeDiff /= 1000;
+        var seconds = Math.round(timeDiff % 60);
+        return seconds;
     };
+    var save_results = function(points, game_id, won_medal, before) {
 
-    var save_results = function(results, game_id) {
-        /* salva a lista de resultados no banco */
         var data = {
-            results: results,
-            game_id: game_id
+            points: points,
+            game_id: game_id,
+            won_medal: won_medal,
+            duration: get_seconds_diff(before)
         };
-        $http.post("/rest/results/add", data).success(function () {
-            // sua chamada do modal vai aqui
-        });
+        $http.post("/rest/results/add", data);
     };
 
     $scope.go_to_games_index = function(){
@@ -72,7 +64,6 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
             .one('click');
     };
 
-
     $scope.close_modal = function(){
         $scope.show_modal = false;
     };
@@ -80,7 +71,9 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $scope.answer = function(answer){
         $scope.tries += 1;
         AnswerService.answer(answer, $scope.tries, $scope.actual_quest.id).success(function(result){
-            if (now.getMilliseconds() - $scope.time > 120000) $scope.medal = false;
+           if (get_seconds_diff(before) > 120){
+             $scope.won_medal = false;
+           }
             if (result.right){
                 $scope.points++;
                 $scope.resposta_mensagem = "Sua resposta esta certa!";
@@ -89,19 +82,18 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                 if ($scope.quests_count  < $scope.quests.length){
                     $scope.actual_quest =  $scope.quests[$scope.quests_count++];
                     $scope.tries = 0;
-                    add_result($scope.points, $scope.medal);
                 }else{
-                    save_results(results, g_game.id);
+                    save_results($scope.points, g_game.id, $scope.won_medal, before);
+                    $scope.go_to_games_index();
                 }
             }else{
                 $scope.resposta_mensagem = "Sua resposta esta errada!";
                 $scope.show_modal();
                 if (!result.can_try_again){
-                    add_result($scope.points, $scope.medal);
-
                     // cabou o jogo
                     if ($scope.quests_count  == $scope.quests.length){
-                        save_results(results, g_game.id);
+                       save_results($scope.points, g_game.id, $scope.won_medal, before);
+                        $scope.go_to_games_index();
                     }else {
                         // proxima pergunta
                         $scope.actual_quest = $scope.quests[$scope.quests_count++];
