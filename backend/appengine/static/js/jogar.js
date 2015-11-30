@@ -73,7 +73,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $scope.answer = function(answer){
         $scope.tries += 1;
         AnswerService.answer(answer, $scope.tries, $scope.actual_quest.id).success(function(result){
-           if (ellapsed_seconds > 120){
+           if (ellapsed_seconds > 60){
              $scope.won_medal = false;
            }
             if (result.right){
@@ -137,8 +137,8 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                 },
                 highlightOnHover: true,
                 popupOnHover: true,
-                highlightFillColor: 'a(6)',
-                highlightBorderColor: 'rgba(60, 15, 250, 0.6)',
+                highlightFillColor: 'rgba(250, 0, 0, 0.6)',
+                highlightBorderColor: 'rgba(250, 0, 0, 0.6)',
                 highlightBorderWidth: 6
             },
             done: function (datamap) {
