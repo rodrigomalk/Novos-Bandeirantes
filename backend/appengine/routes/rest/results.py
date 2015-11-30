@@ -1,37 +1,23 @@
 # coding: utf-8
+
 import json
-from google.appengine.ext import ndb
 from models import Game, Result
 from gaecookie.decorator import no_csrf
 from tekton.gae.middleware.json_middleware import JsonResponse
 
 
 @no_csrf
-def add(_logged_user, results, game_id):
-    """
-    results eh uma lista de dicionarios.
-    Cada dicionario possui:             
-            points: points
-            date: dia atual
-            medal: medal
-    """
-    user_key = _logged_user.key
-    game = Game.get_by_id(long(game_id))
-    results_to_save = []
+def add(_logged_user, **kwargs):
 
-    # para cada result cria um novo objeto no Result
-    # e adiciona na lista de resulst pra salvar
-    for result in results:
-        points = result.get("points")
-        medal = result.get("medal")
-        title = game.to_dict()['tit']
-        results_to_save.append(Result(last=points, first=points, medal=medal, game=game.key, user=user_key, game_title=title))
-        # result.date_l = date
-        # if points > result.best:
-        #     result.best = points
-        #     result.date_b = date
-        # if medal:
-        #     result.medal = medal
-        # result.qtd += 1
-        # result_key = result.put()
-    ndb.put_multi(results_to_save) # salva todos os resultados daquele jogo 
+    user_key = _logged_user.key
+    game_id = kwargs.get("game_id")
+    points = kwargs.get("points")
+    won_medal = kwargs.get("won_medal")
+    duration = kwargs.get('duration')
+    game = Game.get_by_id(long(game_id))
+    game_title = game.to_dict()['tit']
+
+    result = Result.change_result_attrs(points=points, won_medal=won_medal, duration=duration,
+                                        game_title=game_title, game=game, user_key=user_key)
+    result.put()
+    return JsonResponse(json.dumps({}))
