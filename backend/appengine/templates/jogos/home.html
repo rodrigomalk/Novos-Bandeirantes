@@ -21,7 +21,11 @@
                         <td>{{ game.tit }}</td>
                         <td>{{ game.map }}</td>
                         <td>{{ game.qtd }}</td>
-                        <td>{{ game.tmp }}</td>
+                        {% if game.tmp == "0" %}
+                            <td>Sem Limite</td>
+                        {% else %}
+                            <td>{{ game.tmp }} Segundos</td>
+                        {% endif %}
                         <td>{{ game.grp }}</td>
                         {% if resp == "medal" %}
                             {% if game.foto %}

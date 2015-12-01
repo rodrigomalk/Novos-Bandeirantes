@@ -33,7 +33,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $scope.tries = 0;
     $scope.won_medal = true;
     $scope.points = 0;
-    $scope.resposta_mensagem = "Sua resposta esta errada!";
+    $scope.resposta_mensagem = "Sua resposta está errada!";
     var before = new Date();
     var ellapsed_seconds = 0;
 
@@ -41,6 +41,12 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
         setTimeout(function(){
             start_count_time();
             ellapsed_seconds += 1;
+            if(g_game.tmp != 0){
+                if (ellapsed_seconds > g_game.tmp) {
+                    save_results($scope.points, g_game.id, $scope.won_medal, ellapsed_seconds, $scope.quests.length);
+                    $scope.go_to_games_index();
+                }
+            }
         }, 1000);
     };
     start_count_time();
@@ -79,7 +85,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
            }
             if (result.right){
                 $scope.points++;
-                $scope.resposta_mensagem = "Sua resposta esta certa!";
+                $scope.resposta_mensagem = "Sua resposta está certa!";
                 $scope.show_modal();
                 // proxima pergunta
                 if ($scope.quests_count  < $scope.quests.length){
