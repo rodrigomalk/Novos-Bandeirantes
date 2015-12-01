@@ -14,7 +14,6 @@ def index(_logged_user):
     query = Result.query(Result.user == user_key)
     results = query.fetch()
     resp = "---"
-    medal = False
     query = Autor.query()
     autores = query.fetch()
     game_keys = [autor.destination for autor in autores]
@@ -23,8 +22,9 @@ def index(_logged_user):
         for result in results:
             if game.key == result.game:
                 if result.won_medal is True:
-                    medal = True
-                resp = "%d / %d" % (result.best_points, result.size)
+                    resp = "medal"
+                else:
+                    resp = "%d / %d" % (result.best_points, result.size)
     form = GameFormTable()
     jogo_lista = [form.fill_with_model(jogo) for jogo in jogo_lista]
-    return TemplateResponse({"games": jogo_lista, "resp": resp, "medal": medal}, 'jogos/home.html')
+    return TemplateResponse({"games": jogo_lista, "resp": resp}, 'jogos/home.html')
