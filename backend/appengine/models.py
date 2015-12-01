@@ -38,6 +38,7 @@ class Result(ndb.Model):
     best_points = ndb.IntegerProperty(default=0)
     won_medal = ndb.BooleanProperty(default=False)
     frequency = ndb.IntegerProperty(default=0)
+    size = ndb.IntegerProperty()
 
     @classmethod
     def update_many(cls, results):
@@ -52,6 +53,7 @@ class Result(ndb.Model):
         game_title  = kwargs.get("game_title")
         won_medal = kwargs.get("won_medal")
         duration  = kwargs.get("duration")
+        size = kwargs.get('size')
 
         result = cls.query(cls.user==user_key, cls.game==game.key).get()
         if result is not None:
@@ -64,7 +66,7 @@ class Result(ndb.Model):
                 result.best_duration = duration
         else:
             result = cls(user=user_key, game=game.key, game_title=game_title,
-                         best_points=points, best_date=date.today(), best_duration=duration)
+                         best_points=points, best_date=date.today(), best_duration=duration, size=size)
 
         result.last_points = points
         result.last_duration = duration

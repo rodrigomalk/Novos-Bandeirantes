@@ -5,14 +5,10 @@ from arcos import Autor
 from forms import GameFormTable
 from google.appengine.ext import ndb
 from config.template_middleware import TemplateResponse
-from gaepermission.decorator import login_not_required
 from gaecookie.decorator import no_csrf
-from models import Game
-
 
 @no_csrf
-def index(_logged_user):
-    #user_key = _logged_user.key
+def index():
     query = Autor.query()
     autores = query.fetch()
     game_keys = [autor.destination for autor in autores]
