@@ -16,7 +16,6 @@ from models import Game, Quest
 from routes.jogos import download
 
 
-@login_not_required
 @no_csrf
 def index(_logged_user):
     user_key = _logged_user.key
