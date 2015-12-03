@@ -31,9 +31,10 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $scope.quests = g_quest_list;
     $scope.actual_quest = $scope.quests[0];
     $scope.tries = 0;
-    $scope.won_medal = true;
+    $scope.won_medal = false;
+    $scope.medal = true;
     $scope.points = 0;
-    $scope.resposta_mensagem = "Sua resposta esta errada!";
+    $scope.resposta_mensagem = "Sua resposta está errada!";
     var before = new Date();
     var ellapsed_seconds = 0;
 
@@ -41,17 +42,24 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
         setTimeout(function(){
             start_count_time();
             ellapsed_seconds += 1;
+            if(g_game.tmp != 0){
+                if (ellapsed_seconds > g_game.tmp) {
+                    save_results($scope.points, g_game.id, $scope.won_medal, ellapsed_seconds, $scope.quests.length);
+                    $scope.go_to_games_index();
+                }
+            }
         }, 1000);
     };
     start_count_time();
 
-    var save_results = function(points, game_id, won_medal, ellapsed_seconds) {
+    var save_results = function(points, game_id, won_medal, ellapsed_seconds, quests_length) {
 
         var data = {
             points: points,
             game_id: game_id,
             won_medal: won_medal,
-            duration: ellapsed_seconds
+            duration: ellapsed_seconds,
+            size: quests_length
         };
         $http.post("/rest/results/add", data);
     };
@@ -73,28 +81,32 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $scope.answer = function(answer){
         $scope.tries += 1;
         AnswerService.answer(answer, $scope.tries, $scope.actual_quest.id).success(function(result){
-           if (ellapsed_seconds > 120){
-             $scope.won_medal = false;
+           if (ellapsed_seconds > 60){
+             $scope.medal = false;
            }
             if (result.right){
                 $scope.points++;
-                $scope.resposta_mensagem = "Sua resposta esta certa!";
+                $scope.resposta_mensagem = "Sua resposta está certa!";
                 $scope.show_modal();
                 // proxima pergunta
                 if ($scope.quests_count  < $scope.quests.length){
                     $scope.actual_quest =  $scope.quests[$scope.quests_count++];
                     $scope.tries = 0;
                 }else{
-                    save_results($scope.points, g_game.id, $scope.won_medal, ellapsed_seconds);
+                    if($scope.medal == true){
+                        $scope.won_medal = true;
+                    }
+                    save_results($scope.points, g_game.id, $scope.won_medal, ellapsed_seconds, $scope.quests.length);
                     $scope.go_to_games_index();
                 }
             }else{
+                $scope.medal = false;
                 $scope.resposta_mensagem = "Sua resposta esta errada!";
                 $scope.show_modal();
                 if (!result.can_try_again){
                     // cabou o jogo
                     if ($scope.quests_count  == $scope.quests.length){
-                       save_results($scope.points, g_game.id, $scope.won_medal, ellapsed_seconds);
+                       save_results($scope.points, g_game.id, $scope.won_medal, ellapsed_seconds, $scope.quests.length);
                         $scope.go_to_games_index();
                     }else {
                         // proxima pergunta
@@ -137,8 +149,8 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                 },
                 highlightOnHover: true,
                 popupOnHover: true,
-                highlightFillColor: 'a(6)',
-                highlightBorderColor: 'rgba(60, 15, 250, 0.6)',
+                highlightFillColor: 'rgba(250, 0, 0, 0.6)',
+                highlightBorderColor: 'rgba(250, 0, 0, 0.6)',
                 highlightBorderWidth: 6
             },
             done: function (datamap) {

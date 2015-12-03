@@ -7,6 +7,7 @@ from google.appengine.ext import blobstore
 from google.appengine.ext import ndb
 from tekton import router
 from tekton.gae.middleware.redirect import RedirectResponse
+from gaepermission.decorator import login_not_required
 
 from arcos import Autor
 from config.template_middleware import TemplateResponse
