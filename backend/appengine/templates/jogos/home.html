@@ -27,19 +27,19 @@
                             <td>{{ game.tmp }} Segundos</td>
                         {% endif %}
                         <td>{{ game.grp }}</td>
-                        {% if resp == "medal" %}
-                            {% if game.foto %}
-                                <td>
-	                                <img src="{{game.foto}}" width="40px" height="40px"/>
-	                            </td>
-	                        {% else %}
-                        	    <td >
-	                                <img src="/static/img/default.jpg" width="40px" height="40px"/>
-	                            </td>
-	                        {% endif %}
-                        {% else %}
-                            <td>{{ resp }}</td>
-                        {% endif %}
+                            {% if game['result'] == "medal" %}
+                                {% if game.foto %}
+                                    <td>
+                                        <img src="{{game.foto}}" width="40px" height="40px"/>
+                                    </td>
+                                {% else %}
+                                    <td >
+                                        <img src="/static/img/default.jpg" width="40px" height="40px"/>
+                                    </td>
+                                {% endif %}
+                            {% else %}
+                                <td>{{ game['result'] }}</td>
+                            {% endif %}
                         <td>
                             <a role="button" class="btn btn-primary" href="jogar/{{ game.id }}">Jogar</a></td>
                     </tr>

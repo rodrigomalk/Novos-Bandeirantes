@@ -2,6 +2,7 @@
 {% block js %}
 <script type="text/javascript" src="/static/js/lib/angular.min.js"></script>
 <script type="text/javascript" src="/static/jogos/jogo_form.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery-1.11.1.min.js"></script>
 <script type="text/javascript">
 
     var jogoApp = angular.module('jogoApp', ['jogoModulo']).config(function($interpolateProvider){
@@ -25,6 +26,10 @@
           $http.post("/jogos/rest/delete", {jogo_id: game_id}).success(function(){
             $scope.games.splice(index, 1);
           });
+        };
+
+        $scope.selectFile = function(){
+            $("#file_input").click();
         };
 
         $scope.edit = function(game){
@@ -88,13 +93,17 @@
                         <td class="container">
                             <form action="{{ upload_url }}" enctype="multipart/form-data" method="post">
                                 <input type="hidden" name="id" value="{_game.id_}">
-                                <input type="file" id="file" name="files[]">
+
+                                <button type="button" ng-click="selectFile()">Selecionar arquivo</button>
+                                <input style="display:none" type="file" id="file_input" name="files[]" style="cor:white">
                                 <input class="btn btn-success btn-large" type="submit" value="enviar">
                             </form>
                         </td>
+                        <td>&nbsp;&nbsp;&nbsp;</td>
                         <td><button class="btn btn-success" ng-click="edit(game)"><span class="glyphicon glyphicon-pencil" style="color: #080808"></span></button></td>
                         <td><button class="btn btn-danger" ng-click="remove(game.id, $index - 0)"><span class="glyphicon glyphicon-trash" style="color: #080808"></span></button></td>
                         <td><a role="button" class="btn btn-primary" href="{{pergunta_url }}?game_id={_game.id_}">Gerenciar Perguntas</a></td>
+                        <td><a role="button" class="btn btn-primary" href="{{pergunta_url }}?game_id={_game.id_}">Analisar Resultados</a></td>
                     </tr>
                 </table>
             </div>

@@ -64,6 +64,10 @@ class Result(ndb.Model):
                 result.best_duration = duration
             else:
                 result.best_duration = duration
+            if result.won_medal == False:
+                if won_medal:
+                    result.medal_date = date.today()
+                    result.won_medal = True
 
         else:
             result = cls(user=user_key, game=game.key, game_title=game_title,
@@ -72,9 +76,4 @@ class Result(ndb.Model):
         result.last_points = points
         result.last_duration = duration
         result.frequency += 1
-        result.won_medal = won_medal
-        if result.won_medal == False:
-            if won_medal:
-                result.medal_date = date.today()
-                result.won_medal = True
         return result
