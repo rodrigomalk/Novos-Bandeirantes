@@ -7,7 +7,7 @@ from google.appengine.ext import blobstore
 from google.appengine.ext import ndb
 from tekton import router
 from tekton.gae.middleware.redirect import RedirectResponse
-from gaepermission.decorator import login_not_required
+from gaepermission.decorator import login_not_required, login_required
 
 from arcos import Autor
 from config.template_middleware import TemplateResponse
@@ -17,6 +17,7 @@ from routes.jogos import download
 
 
 @no_csrf
+@login_required
 def index(_logged_user):
     user_key = _logged_user.key
     query = Autor.query(Autor.origin == user_key)
