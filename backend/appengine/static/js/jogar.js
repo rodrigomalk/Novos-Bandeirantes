@@ -147,10 +147,11 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                         geo.properties.name,
                         '</strong></div>'].join('');
                 },
+                borderColor: 'rgba(0, 0, 0, 0.6)',
                 highlightOnHover: true,
                 popupOnHover: true,
-                highlightFillColor: 'rgba(250, 0, 0, 0.6)',
-                highlightBorderColor: 'rgba(250, 0, 0, 0.6)',
+                highlightFillColor: 'rgba(13,255,13,0.8)',
+                highlightBorderColor: 'rgba(255, 13, 13, 0.6)',
                 highlightBorderWidth: 6
             },
             done: function (datamap) {
@@ -171,8 +172,8 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                 labels: ['Argentina', 'Bolívia', 'Brasil', 'Chile', 'Colômbia', 'Equador', 'Guiana', 'Guiana Francesa', 'Paraguai', 'Peru', 'Suriname', 'Uruguai', 'Venezuela'],
                 datasets: [
                     {
-                        fillColor: "rgba(13,13,255,0.8)",
-                        strokeColor: "rgba(60, 15, 250, 0.6)",
+                        fillColor: "rgba(255,255,255,0.8)",
+                        strokeColor: "rgba(255, 255, 255, 0.6)",
                         data: a
                     }
                 ]

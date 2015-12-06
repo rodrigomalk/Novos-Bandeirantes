@@ -52,9 +52,24 @@
   #containerm {
     position: absolute;
     width: 413px;
-    height: 596px;
+    height: 620px;
     float: left;
-    left: 40%; }
+    left: 2%;
+    min-height: 596px;
+    margin-top: -5px;
+    margin-bottom: -20px;
+    border-radius: 10px 40px;
+    background-color: #FFFFFF;
+    color: #000000;
+    padding: 5px;  }
+
+  .containerm{
+    padding-right:15px;
+    padding-left:15px;
+    margin-right:auto;
+    margin-left:auto}
+
+    @media(min-width:768px){#containerm{width:750px}}@media(min-width:992px){#containerm{width:970px}}@media (min-width:1200px){#containerm{width:1170px}}#containerm-fluid{padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}
 
     #grafico {
       margin-top: -70px; }
