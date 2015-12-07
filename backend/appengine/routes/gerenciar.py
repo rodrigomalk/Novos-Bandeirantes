@@ -127,6 +127,7 @@ def pergunta(game_id):
     return TemplateResponse({"quests": quests, "game_id": game_id}, template_path="gerenciar/pergunta.html")
 
 @no_csrf
+@login_required
 def analise(game_id):
     game = Game.get_by_id(long(game_id))
     query = Result.query(Result.game == game.key)

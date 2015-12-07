@@ -4,9 +4,11 @@ import json
 from models import Game, Result
 from gaecookie.decorator import no_csrf
 from tekton.gae.middleware.json_middleware import JsonResponse
+from gaepermission.decorator import login_required
 
 
 @no_csrf
+@login_required
 def add(_logged_user, **kwargs):
 
     user_key = _logged_user.key

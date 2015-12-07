@@ -5,9 +5,11 @@ import json
 from gaecookie.decorator import no_csrf
 from config.template_middleware import TemplateResponse
 from models import Quest, Game
+from gaepermission.decorator import login_required
 
 
 @no_csrf
+@login_required
 def index(_logged_user, game_id):
     game = Game.get_by_id(long(game_id))
     quests = Quest.query().fetch()

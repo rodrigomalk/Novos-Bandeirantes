@@ -6,9 +6,11 @@ from forms import GameFormTable
 from google.appengine.ext import ndb
 from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
+from gaepermission.decorator import login_required
 from models import Result
 
 @no_csrf
+@login_required
 def index(_logged_user):
     user_key = _logged_user.key
     query = Result.query(Result.user == user_key)

@@ -49,7 +49,7 @@ def delete(_resp, jogo_id):
         _resp.status_code = 500
         return JsonResponse(cmd.errors)
 
-
+@login_required
 def _save_or_update_json_response(cmd, _logged_user, _resp):
     try:
         jogo = cmd()
