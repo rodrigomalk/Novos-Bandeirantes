@@ -2,12 +2,15 @@
 from __future__ import absolute_import, unicode_literals
 from gaebusiness.business import CommandExecutionException
 from tekton.gae.middleware.json_middleware import JsonResponse
+from gaepermission.decorator import login_required
 from jogo_app import jogo_facade
+from arcos import Autor
 from gaegraph.model import Arc
 from google.appengine.ext import ndb
 from jogo_app.jogo_model import Jogo
 
 
+@login_required
 def index(_logged_user):
     user_key = _logged_user.key
     query = Autor.query(Autor.origin == user_key)
@@ -20,16 +23,20 @@ def index(_logged_user):
     jogo_dcts = [jogo_form.fill_with_model(m) for m in jogo_list if m in jogos]
     return JsonResponse(jogo_dcts)
 
+
+@login_required
 def new(_resp, _logged_user, **jogo_properties):
     cmd = jogo_facade.save_jogo_cmd(**jogo_properties)
     return _save_or_update_json_response(cmd, _logged_user, _resp)
 
 
+@login_required
 def edit(_resp, jogo_id, **jogo_properties):
     cmd = jogo_facade.update_jogo_cmd(jogo_id, **jogo_properties)
     return update_json_response(cmd, _resp)
 
 
+@login_required
 def delete(_resp, jogo_id):
     cmd = jogo_facade.delete_jogo_cmd(jogo_id)
     try:
@@ -41,6 +48,7 @@ def delete(_resp, jogo_id):
     except CommandExecutionException:
         _resp.status_code = 500
         return JsonResponse(cmd.errors)
+
 
 def _save_or_update_json_response(cmd, _logged_user, _resp):
     try:
@@ -54,6 +62,8 @@ def _save_or_update_json_response(cmd, _logged_user, _resp):
     jogo_form = jogo_facade.jogo_form()
     return JsonResponse(jogo_form.fill_with_model(jogo))
 
+
+@login_required
 def update_json_response(cmd, _resp):
     try:
         jogo = cmd()
@@ -62,7 +72,3 @@ def update_json_response(cmd, _resp):
         return JsonResponse(cmd.errors)
     jogo_form = jogo_facade.jogo_form()
     return JsonResponse(jogo_form.fill_with_model(jogo))
-
-class Autor(Arc):
-    origin = ndb.KeyProperty(required=True)
-    destination = ndb.KeyProperty(required=True)

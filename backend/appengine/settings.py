@@ -24,7 +24,6 @@ TEMPLATE_400_ERROR = 'base/400.html'
 MIDDLEWARE_LIST = [MultitenacyMiddleware,
                    LoggedUserMiddleware,
                    TemplateMiddleware,
-                   EmailMiddleware,
                    Webapp2Dependencies,
                    RequestParamsMiddleware,
                    CSRFInputToDependency,

@@ -3,10 +3,12 @@
 import json
 from models import Game, Quest
 from gaecookie.decorator import no_csrf
+from gaepermission.decorator import login_required
 from tekton.gae.middleware.json_middleware import JsonResponse
 
 
 @no_csrf
+@login_required
 def all(game_id):
     game = Game.get_by_id(long(game_id))
     if game is not None:
@@ -16,9 +18,9 @@ def all(game_id):
 
 
 @no_csrf
+@login_required
 def add(question, answer, game_id, id=None):
     game = Game.get_by_id(long(game_id))
-
     if game is None:
         raise Exception("game id: %s not found" % game_id)
     if id is not None:
@@ -33,10 +35,10 @@ def add(question, answer, game_id, id=None):
 
 
 @no_csrf
+@login_required
 def delete(quest_id):
     quest = Quest.get_by_id(long(quest_id))
     if quest is not None:
         quest.key.delete()
         return json.dumps({})
     raise Exception("quest id: %s not found" % quest_id)
-
