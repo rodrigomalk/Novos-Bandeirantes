@@ -12,7 +12,7 @@ from gaepermission.decorator import login_not_required, login_required
 from arcos import Autor
 from config.template_middleware import TemplateResponse
 from forms import GameForm, GameFormTable, QuestForm
-from models import Game, Quest
+from models import Game, Quest, Result
 from routes.jogos import download
 
 
@@ -28,15 +28,15 @@ def index(_logged_user):
     jogo_lista = [form.fill_with_model(jogo) for jogo in jogo_lista]
     editar_form_path = router.to_path(editar_form)
     deletar_form_path = router.to_path(deletar_form)
-
     success_url = router.to_path(upload)
     pergunta_url = router.to_path(pergunta)
+    analise_url = router.to_path(analise)
     bucket = get_default_gcs_bucket_name()
     upload_url = blobstore.create_upload_url(success_url, gs_bucket_name=bucket)
     for jogo in jogo_lista:
         jogo['edit_path'] = '%s/%s' % (editar_form_path, jogo['id'])
         jogo['delete_path'] = '%s/%s' % (deletar_form_path, jogo['id'])
-    contexto = {'jogo_lista': jogo_lista, "upload_url": upload_url, "pergunta_url": pergunta_url}
+    contexto = {'jogo_lista': jogo_lista, "upload_url": upload_url, "pergunta_url": pergunta_url, "analise_url": analise_url}
     return TemplateResponse(contexto)
 
 
@@ -119,4 +119,10 @@ def pergunta(game_id):
 
     return TemplateResponse({"quests": quests, "game_id": game_id}, template_path="gerenciar/pergunta.html")
 
+@no_csrf
+def analise(game_id):
+    game = Game.get_by_id(long(game_id))
+    query = Result.query(Result.game == game.key)
+    results = query.fetch()
+    return TemplateResponse({"results": results, "game_id": game_id}, template_path="gerenciar/analise.html")
 

@@ -54,7 +54,7 @@
     width: 413px;
     height: 620px;
     float: left;
-    left: 2%;
+    left: 50%;
     min-height: 596px;
     margin-top: -5px;
     margin-bottom: -20px;
@@ -69,7 +69,7 @@
     margin-right:auto;
     margin-left:auto}
 
-    @media(min-width:768px){#containerm{width:750px}}@media(min-width:992px){#containerm{width:970px}}@media (min-width:1200px){#containerm{width:1170px}}#containerm-fluid{padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}
+    @media(min-width:768px){#containerm{width:750px}}@media(min-width:992px){#containerm{width:970px}}@media (min-width:1200px){#containerm{width:1170px;margin-left:-585px;}}#containerm-fluid{padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}
 
     #grafico {
       margin-top: -70px; }

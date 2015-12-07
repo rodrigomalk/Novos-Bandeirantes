@@ -1,0 +1,56 @@
+{% extends '/gerenciar/base.html' %}
+{% block js %}
+<script type="text/javascript" src="/static/js/lib/angular.min.js"></script>
+<script type="text/javascript" src="/static/jogos/jogo_form.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+
+    var jogoApp = angular.module('jogoApp', ['jogoModulo']).config(function($interpolateProvider){
+      $interpolateProvider.startSymbol("{_");
+      $interpolateProvider.endSymbol("_}");
+    }).controller("JogoController", function($scope, $http, $window){
+        $scope.game={};
+        $scope.mostra=false;
+        $scope.games = [];
+        $scope.is_editing = false;
+
+        $window.onload = $scope.list_games;
+
+    });
+</script>
+{% endblock %}
+{% block conteudo %}
+    <div class="col-md-12"  ng-app="jogoApp" ng-controller="JogoController">
+        <div class="conteudo">
+            <div class="well">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Primeiro</th>
+                        <th></th>
+                        <th>Último</th>
+                        <th></th>
+                        <th>Melhor</th>
+                        <th></th>
+                        <th>Frequ&ecirc;ncia</th>
+                        <th>Conquista de Medalha</th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="result in results">
+                        <td>"Teste"</td>
+                        <td ng-bind="result.first_point"></td>
+                        <td ng-bind="result.first_date"></td>
+                        <td ng-bind="result.last_point"></td>
+                        <td ng-bind="result.last_date"></td>
+                        <td ng-bind="result.best_point"></td>
+                        <td ng-bind="result.best_date"></td>
+                        <td ng-bind="result.first_point"></td>
+                        <td ng-bind="result.frequency"></td>
+                        <td ng-if="result.won_medal" ng-bind="medal_date"></td>
+                    </tr>
+                </table>
+            </div>
+		</div>
+    </div>
+{% endblock %}

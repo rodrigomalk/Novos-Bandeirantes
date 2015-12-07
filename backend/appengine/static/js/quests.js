@@ -76,10 +76,21 @@ angular.module('questApp', []).config(function($locationProvider, $interpolatePr
           $scope.error_message = "Por favor. Preencha todos os campos.";
           return false;
       }
-        return true;
+        $scope.valid = true;
+        $scope.paises = ["Argentina", "Bolívia", "Brasil", "Colômbia", "Chile", "Guiana", "Guiana Francesa", "Suriname", "Peru", "Venezuela", "Paraguai", "Equador", "Uruguai"];
+        for (pais in $scope.paises){
+              if($scope.new_answer == pais){
+                  $scope.valid = true;
+              }
+          }
+        if ($scope.valid == true){
+            return true;
+        }
+        else {
+            $scope.error_message = "Por favor. Insira um país válido pertencente ao mapa selecionado.";
+            return false;
+        }
     };
-
-
 
 });
 
