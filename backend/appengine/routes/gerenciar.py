@@ -41,6 +41,7 @@ def index(_logged_user):
 
 
 @no_csrf
+@login_required
 def upload(_handler, **jogos_properties):
     if jogos_properties.get('files'):
         blob_infos = _handler.get_uploads("files[]")
@@ -53,12 +54,14 @@ def upload(_handler, **jogos_properties):
 
 
 @no_csrf
+@login_required
 def criar():
     contexto = {'criar_modelo': router.to_path(salvar)}
     return TemplateResponse(contexto)
 
 
 @no_csrf
+@login_required
 def deletar_form(jogo_id):
     chave = ndb.Key(Game, int(jogo_id))
     chave.delete()
@@ -69,6 +72,7 @@ def deletar_form(jogo_id):
 
 
 @no_csrf
+@login_required
 def editar_form(jogo_id):
     jogo_id = int(jogo_id)
     jogo=Game.get_by_id(jogo_id)
@@ -79,6 +83,7 @@ def editar_form(jogo_id):
     return TemplateResponse(contexto, 'temporario/forme.html')
 
 
+@login_required
 def atualizar(jogo_id, **propriedades):
     jogo_id = int(jogo_id)
     jogo = Game.get_by_id(jogo_id)
@@ -95,6 +100,7 @@ def atualizar(jogo_id, **propriedades):
         return RedirectResponse(router.to_path(index))
 
 
+@login_required
 def salvar(_logged_user, **propriedades):
     game_form = GameForm(**propriedades)
     erros = game_form.validate()
@@ -113,6 +119,7 @@ def salvar(_logged_user, **propriedades):
 
 
 @no_csrf
+@login_required
 def pergunta(game_id):
     quest_form = QuestForm()
     quests = [quest_form.fill_with_model(quest) for quest in Quest.query().fetch()]

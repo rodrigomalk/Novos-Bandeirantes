@@ -6,7 +6,7 @@ from jogo_app.jogo_model import Jogo
 from gaebusiness.business import CommandExecutionException
 from config.template_middleware import TemplateResponse
 from gaecookie.decorator import no_csrf
-from gaepermission.decorator import login_not_required
+from gaepermission.decorator import login_not_required, login_required
 from routes import jogos
 from routes.jogos import download
 from tekton import router
@@ -16,8 +16,8 @@ from google.appengine.ext import blobstore
 from google.appengine.api.app_identity.app_identity import get_default_gcs_bucket_name
 
 
-@login_not_required
 @no_csrf
+@login_required
 def index(_handler, **jogos_properties):
     if jogos_properties.get('files'):
         blob_infos = _handler.get_uploads("files[]")
@@ -37,7 +37,7 @@ def index(_handler, **jogos_properties):
     return RedirectResponse(router.to_path(jogos))
 
 
-@login_not_required
+@login_required
 @no_csrf
 def edit(_handler, **jogos_properties):
     if jogos_properties.get('files'):
@@ -65,7 +65,7 @@ def edit(_handler, **jogos_properties):
     return RedirectResponse(router.to_path(jogos))
 
 
-@login_not_required
+@login_required
 @no_csrf
 def delete(obj_id=0):
     cmd = jogo_facade.delete_jogo_cmd(obj_id)

@@ -2,10 +2,12 @@
 
 from models import Quest
 from gaecookie.decorator import no_csrf
+from gaepermission.decorator import login_required
 from tekton.gae.middleware.json_middleware import JsonResponse
 
 
 @no_csrf
+@login_required
 def answer_question(answer, tries, quest_id):
     response = {}
     quest = Quest.get_by_id(long(quest_id))

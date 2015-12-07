@@ -10,7 +10,7 @@ var jogoApp = angular.module('jogoApp', ['jogoModulo']).config(function($interpo
     $scope.is_editing = false;
 
     $scope.list_games = function(){
-      $http.post("/jogos/rest/index").success(function(result){
+      $http.post("/rest/games/").success(function(result){
         $scope.games = result;
       });
     };
@@ -18,7 +18,7 @@ var jogoApp = angular.module('jogoApp', ['jogoModulo']).config(function($interpo
     $window.onload = $scope.list_games;
 
     $scope.remove = function(game_id, index){
-      $http.post("/jogos/rest/delete", {jogo_id: game_id}).success(function(){
+      $http.post("/rest/games/delete", {jogo_id: game_id}).success(function(){
         $scope.games.splice(index, 1);
       });
     };
