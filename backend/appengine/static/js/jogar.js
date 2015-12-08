@@ -30,6 +30,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $scope.quests_count = 1;
     $scope.quests = g_quest_list;
     $scope.actual_quest = $scope.quests[0];
+    $scope.previous_quest = $scope.actual_quest;
     $scope.tries = 0;
     $scope.won_medal = false;
     $scope.medal = true;
@@ -88,6 +89,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                 $scope.points++;
                 $scope.resposta_mensagem = "Sua resposta está certa!";
                 $scope.show_modal();
+                $scope.previous_quest = $scope.actual_quest;
                 // proxima pergunta
                 if ($scope.quests_count  < $scope.quests.length){
                     $scope.actual_quest =  $scope.quests[$scope.quests_count++];
@@ -103,6 +105,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                 $scope.medal = false;
                 $scope.resposta_mensagem = "Sua resposta esta errada!";
                 $scope.show_modal();
+                $scope.previous_quest = $scope.actual_quest;
                 if (!result.can_try_again){
                     // cabou o jogo
                     if ($scope.quests_count  == $scope.quests.length){
