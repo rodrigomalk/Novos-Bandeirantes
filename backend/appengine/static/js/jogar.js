@@ -66,7 +66,7 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     };
 
     $scope.go_to_games_index = function(){
-        $window.location.href = "/jogos";
+        setTimeout(function(){ ($window.location.href = "/jogos"); }, 3000);
     };
 
     $scope.show_modal = function(){
