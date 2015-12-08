@@ -38,7 +38,7 @@ class Result(ndb.Model):
     first_points = ndb.IntegerProperty(default=0)
     last_points = ndb.IntegerProperty(default=0)
     best_points = ndb.IntegerProperty(default=0)
-    won_medal = ndb.BooleanProperty()
+    won_medal = ndb.BooleanProperty(default=False)
     medal_date = ndb.DateProperty()
     frequency = ndb.IntegerProperty(default=0)
     size = ndb.IntegerProperty()
@@ -74,7 +74,7 @@ class Result(ndb.Model):
 
         else:
             result = cls(user=user_key, game=game.key, game_title=game_title, first_date=date.today(), first_duration=duration, first_points=points,
-                         best_points=points, best_date=date.today(), best_duration=duration, size=size)
+                         best_points=points, best_date=date.today(), best_duration=duration, size=size, won_medal=won_medal)
 
         result.last_points = points
         result.last_duration = duration
