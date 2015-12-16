@@ -37,3 +37,8 @@ indexes:
   properties:
   - name: class
   - name: email
+
+- kind: Result
+  properties:
+  - name: game
+  - name: best_points

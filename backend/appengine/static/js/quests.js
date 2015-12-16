@@ -72,6 +72,7 @@ angular.module('questApp', []).config(function($locationProvider, $interpolatePr
     };
 
     $scope.validate_fields = function(){
+        $scope.error_message = "";
       if (!$scope.new_answer || !$scope.new_question){
           $scope.error_message = "Por favor. Preencha todos os campos.";
           return false;
@@ -93,7 +94,7 @@ angular.module('questApp', []).config(function($locationProvider, $interpolatePr
             "Uruguai"
             ];
         for (var i in paises){
-          if($scope.new_answer == paises[i].toLowerCase()){
+          if($scope.new_answer.toLowerCase() == paises[i].toLowerCase()){
             valid = true
           }
         }

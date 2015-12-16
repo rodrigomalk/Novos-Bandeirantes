@@ -130,7 +130,7 @@ def pergunta(game_id):
 @login_required
 def analise(game_id):
     game = Game.get_by_id(long(game_id))
-    query = Result.query(Result.game == game.key)
+    query = Result.query(Result.game == game.key).order(Result.best_points)
     results = query.fetch()
     return TemplateResponse({"results": results, "game_id": game_id}, template_path="gerenciar/analise.html")
 
