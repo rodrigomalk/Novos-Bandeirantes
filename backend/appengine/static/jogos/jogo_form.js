@@ -20,7 +20,7 @@ jogoModulo.directive('jogoform', function(){
                 $scope.salvando = true;
               if ($scope.isEditing){
                 $scope.game.jogo_id = $scope.game.id;
-                $scope.save_or_edit_url = '/rest/games/edit';
+                save_or_edit_url = '/rest/games/edit';
 
               }
               else{
@@ -35,6 +35,12 @@ jogoModulo.directive('jogoform', function(){
                   $scope.errors=errors;
                   console.log(errors);
                   $scope.salvando = false;
+              }).finally(function(){
+                  for (property in $scope.game){
+                    if ($scope.game.hasOwnProperty(property)){
+                      $scope.game[property] = '';
+                    }
+                  }
               });
           };
         }
