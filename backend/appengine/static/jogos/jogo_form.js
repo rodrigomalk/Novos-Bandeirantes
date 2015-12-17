@@ -29,18 +29,13 @@ jogoModulo.directive('jogoform', function(){
               $http.post(save_or_edit_url, $scope.game).success(function(game){
                   $scope.salvando = false;
                   $scope.formOnOff();
-                  if (save_or_edit_url == '/rest/games/new')
+                  if (save_or_edit_url == '/rest/games/new'){
                     $scope.games.push(game);
+                  }
               }).error(function(errors){
                   $scope.errors=errors;
                   console.log(errors);
                   $scope.salvando = false;
-              }).finally(function(){
-                  for (property in $scope.game){
-                    if ($scope.game.hasOwnProperty(property)){
-                      $scope.game[property] = '';
-                    }
-                  }
               });
           };
         }

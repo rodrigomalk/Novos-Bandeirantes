@@ -9,8 +9,8 @@
       $interpolateProvider.startSymbol("{_");
       $interpolateProvider.endSymbol("_}");
     }).controller("JogoController", function($scope, $http, $window){
-        $scope.game={};
-        $scope.mostra=false;
+        $scope.game = {};
+        $scope.mostra = false;
         $scope.games = [];
         $scope.is_editing = false;
 
@@ -42,14 +42,14 @@
         };
 
         $scope.new = function(){
+          $scope.game = {};
           $scope.formOnOff();
           $scope.is_editing = false;
           $scope.edit_or_create = 'Criar';
         };
 
-        $scope.formOnOff=function(){
-            $scope.mostra=!$scope.mostra;
-
+        $scope.formOnOff = function(){
+            $scope.mostra = !$scope.mostra;
         };
 
     });
