@@ -58,8 +58,10 @@ angular.module('questApp', []).config(function($locationProvider, $interpolatePr
         $scope.show_add_quest = false;
     };
 
-    $scope.edit_quest = function(){
-
+    $scope.edit_quest = function(quest){
+        if($scope.validate_fields){
+            $scope.save_quest(quest);
+        }
     };
 
     $scope.new_quest = function(){
