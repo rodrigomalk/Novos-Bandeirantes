@@ -54,7 +54,6 @@
     width: 413px;
     height: 620px;
     float: left;
-    left: 50%;
     min-height: 596px;
     margin-top: -5px;
     margin-bottom: -20px;
@@ -79,7 +78,11 @@
           overflow: hidden;   }
           #gra {
             height: 277px;
-            float: right;   }
+            float: right;
+          }
+          #containerm{
+                left: 50%;
+          }
 }
 
 @media screen and (max-width: 1203px) {
@@ -94,6 +97,9 @@
           #gra {
             height: 277px;
             float: right;   }
+              #containerm{
+      left: 10%;
+    }
 }
 
 @media screen and (max-width: 953px) {
@@ -105,13 +111,18 @@
       height: 284px;
       top: 540px;
       right: -1px;   }
+    #containerm{
+      left: 20%;
+    }
 }
 
 @media screen and (max-width: 493px) {
   #menu {
     display: none;   }
     #containerm {
-      float: none;   }
+      float: none;
+      left: 2px;
+    }
       #gra {
         position: relative;
         float: right;

@@ -37,3 +37,41 @@ indexes:
   properties:
   - name: class
   - name: email
+
+- kind: Result
+  properties:
+  - name: game
+  - name: best_points
+
+- kind: Result
+  properties:
+  - name: game
+  - name: best_points
+    direction: desc
+
+- kind: Result
+  properties:
+  - name: game
+  - name: best_points
+    direction: desc
+  - name: won_medal
+    direction: desc
+
+- kind: Result
+  properties:
+  - name: game
+  - name: won_medal
+
+- kind: Result
+  properties:
+  - name: game
+  - name: won_medal
+    direction: desc
+
+- kind: Result
+  properties:
+  - name: game
+  - name: won_medal
+    direction: desc
+  - name: best_points
+    direction: desc

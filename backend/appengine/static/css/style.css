@@ -13,13 +13,11 @@ h2{
     color: #000000;
     padding-top: 10px;
     padding-left: 30%;
-    text-shadow: #00aaff 1.5px 1.5px 1.5px, #00aaff -1.5px -1.5px 1.5px;
 }
 
 h3{
     color: #000000;
     top: 10px;
-    text-shadow: #00aaff 1px 1px 1px, #00aaff -1px -1px 1px;
 }
 
 h4{
@@ -110,4 +108,3 @@ b {
 .btn.btn-menu:hover{
     color: #00aaff;
 }
-

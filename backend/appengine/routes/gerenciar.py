@@ -8,7 +8,7 @@ from google.appengine.ext import ndb
 from tekton import router
 from tekton.gae.middleware.redirect import RedirectResponse
 from gaepermission.decorator import login_not_required, login_required
-
+from gaegraph.model import Node
 from arcos import Autor
 from config.template_middleware import TemplateResponse
 from forms import GameForm, GameFormTable, QuestForm
@@ -90,7 +90,7 @@ def atualizar(jogo_id, **propriedades):
     game_form = GameForm(**propriedades)
     erros = game_form.validate()
     if erros:
-            contexto = {'editar_path': router.to_path(atualizar),
+            contexto = {'editar_path': router.to_path(salvar),
                       'game': game_form,
                       'erros': erros}
             return TemplateResponse(contexto, 'temporario/form.html')
@@ -130,7 +130,13 @@ def pergunta(game_id):
 @login_required
 def analise(game_id):
     game = Game.get_by_id(long(game_id))
-    query = Result.query(Result.game == game.key)
-    results = query.fetch()
+    query = Result.query(Result.game == game.key).order(-Result.best_points).order(-Result.won_medal)
+    results_lista = query.fetch()
+    results = []
+    for result in results_lista:
+        user = Node.get_by_id(long(result.user.id()))
+        result_dict = result.to_dict()
+        result_dict['user_name'] = user.name
+        results.append(result_dict)
     return TemplateResponse({"results": results, "game_id": game_id}, template_path="gerenciar/analise.html")
 

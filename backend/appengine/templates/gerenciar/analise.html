@@ -9,9 +9,9 @@
       $interpolateProvider.startSymbol("{_");
       $interpolateProvider.endSymbol("_}");
     }).controller("JogoController", function($scope, $http, $window){
-        $scope.game={};
+        $scope.result={};
         $scope.mostra=false;
-        $scope.games = [];
+        $scope.results = [];
         $scope.is_editing = false;
 
         $window.onload = $scope.list_games;
@@ -37,18 +37,23 @@
                         <th>Conquista de Medalha</th>
                     </tr>
                     </thead>
-                    <tr ng-repeat="result in results">
-                        <td>"Teste"</td>
-                        <td ng-bind="result.first_point"></td>
-                        <td ng-bind="result.first_date"></td>
-                        <td ng-bind="result.last_point"></td>
-                        <td ng-bind="result.last_date"></td>
-                        <td ng-bind="result.best_point"></td>
-                        <td ng-bind="result.best_date"></td>
-                        <td ng-bind="result.first_point"></td>
-                        <td ng-bind="result.frequency"></td>
-                        <td ng-if="result.won_medal" ng-bind="medal_date"></td>
-                    </tr>
+                    {% for result in results %}
+                        <tr>
+                            <td>{{ result.user_name }}</td>
+                            <td>{{ result.first_points }}</td>
+                            <td>{{ result.first_date }}</td>
+                            <td>{{ result.last_points }}</td>
+                            <td>{{ result.last_date }}</td>
+                            <td>{{ result.best_points }}</td>
+                            <td>{{ result.best_date }}</td>
+                            <td>{{ result.frequency }}</td>
+                            {% if result.won_medal %}
+                                <td>Sim</td>
+                            {% else %}
+                                <td>N&atilde;o</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
                 </table>
             </div>
 		</div>

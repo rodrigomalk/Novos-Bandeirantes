@@ -35,7 +35,9 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
     $scope.won_medal = false;
     $scope.medal = true;
     $scope.points = 0;
-    $scope.resposta_mensagem = "Sua resposta está errada!";
+    $scope.resposta_mensagem = "Você errou!!";
+    $scope.resposta_aviso = "";
+    $scope.cor = "#00aaff";
     var before = new Date();
     var ellapsed_seconds = 0;
 
@@ -87,9 +89,11 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
            }
             if (result.right){
                 $scope.points++;
-                $scope.resposta_mensagem = "Sua resposta está certa!";
-                $scope.show_modal();
+                $scope.resposta_mensagem = "Você acertou!";
                 $scope.previous_quest = $scope.actual_quest;
+                $scope.resposta_aviso = "A resposta é " + $scope.previous_quest.answer;
+                $scope.cor = "#00FF00";
+                $scope.show_modal();
                 // proxima pergunta
                 if ($scope.quests_count  < $scope.quests.length){
                     $scope.actual_quest =  $scope.quests[$scope.quests_count++];
@@ -103,9 +107,17 @@ angular.module("jogarApp", ['answer_service']).config(function($interpolateProvi
                 }
             }else{
                 $scope.medal = false;
-                $scope.resposta_mensagem = "Sua resposta esta errada!";
-                $scope.show_modal();
+                $scope.resposta_mensagem = "Você errou!";
                 $scope.previous_quest = $scope.actual_quest;
+                if(result.can_try_again){
+                    $scope.resposta_aviso = "Tente Novamente!";
+                }
+                else {
+                    $scope.resposta_aviso = "A resposta é " + $scope.previous_quest.answer;
+                }
+                $scope.cor = "#FF0000";
+                $scope.show_modal();
+
                 if (!result.can_try_again){
                     // cabou o jogo
                     if ($scope.quests_count  == $scope.quests.length){
