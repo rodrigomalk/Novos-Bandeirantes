@@ -90,7 +90,7 @@ def atualizar(jogo_id, **propriedades):
     game_form = GameForm(**propriedades)
     erros = game_form.validate()
     if erros:
-            contexto = {'editar_path': router.to_path(atualizar),
+            contexto = {'editar_path': router.to_path(salvar),
                       'game': game_form,
                       'erros': erros}
             return TemplateResponse(contexto, 'temporario/form.html')
@@ -130,7 +130,7 @@ def pergunta(game_id):
 @login_required
 def analise(game_id):
     game = Game.get_by_id(long(game_id))
-    query = Result.query(Result.game == game.key).order(Result.best_points)
+    query = Result.query(Result.game == game.key).order(-Result.best_points).order(-Result.won_medal)
     results_lista = query.fetch()
     results = []
     for result in results_lista:

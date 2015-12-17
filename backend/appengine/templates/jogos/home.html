@@ -20,8 +20,12 @@
                     <tr>
                         <td>{{ game.tit }}</td>
                         <td>{{ game.map }}</td>
-                        <td>{{ game.qtd }}</td>
-                        {% if game.tmp == "0" %}
+                        {% if game.qtd <= 1 %}
+                            <td>&Uacute;nica Tentativa</td>
+                        {% else %}
+                            <td>{{ game.qtd }}</td>
+                        {% endif %}
+                        {% if game.tmp == 0 %}
                             <td>Sem Limite</td>
                         {% else %}
                             <td>{{ game.tmp }} Segundos</td>
