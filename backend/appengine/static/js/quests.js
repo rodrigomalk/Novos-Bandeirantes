@@ -59,7 +59,7 @@ angular.module('questApp', []).config(function($locationProvider, $interpolatePr
     };
 
     $scope.edit_quest = function(quest){
-        if($scope.validate_fields){
+        if($scope.validate_fields(quest.question, quest.answer)){
             $scope.save_quest(quest);
         }
     };
@@ -73,9 +73,9 @@ angular.module('questApp', []).config(function($locationProvider, $interpolatePr
         $http.post("/rest/quests/delete/", {quest_id: quest.id});
     };
 
-    $scope.validate_fields = function(){
+    $scope.validate_fields = function(question, answer){
         $scope.error_message = "";
-      if (!$scope.new_answer || !$scope.new_question){
+      if (!answer || !question){
           $scope.error_message = "Por favor. Preencha todos os campos.";
           return false;
       }
@@ -96,7 +96,7 @@ angular.module('questApp', []).config(function($locationProvider, $interpolatePr
             "Uruguai"
             ];
         for (var i in paises){
-          if($scope.new_answer.toLowerCase() == paises[i].toLowerCase()){
+          if(answer.toLowerCase() == paises[i].toLowerCase()){
             valid = true
           }
         }
