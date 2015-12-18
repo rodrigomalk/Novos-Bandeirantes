@@ -33,6 +33,7 @@
                                     <button class="btn btn-danger" ng-click="remove_quest($index)"><span class="glyphicon glyphicon-trash" style="color: #080808"></span></button>
                                 </td>
                         </tr>
+                    <label class="text-danger">{_error_message_}</label>
                     </tbody>
                 </table>
 
@@ -42,7 +43,6 @@
                 <input type="text" ng-model="new_question" placeholder="Pergunta">
                 <input type="text" ng-model="new_answer" placeholder="Resposta">
                 <input class="btn btn-success" type="submit" value="Salvar" ng-disabled="has_empty_fields()">
-                <label class="text-danger">{_error_message_}</label>
             </form>
         </div>
         </div>
